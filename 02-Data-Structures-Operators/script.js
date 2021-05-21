@@ -11,9 +11,6 @@ const restaurant = {
   categories: ['Italian', 'Pizzeria', 'Vegetarian', 'Organic'],
   starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
   mainMenu: ['Pizza', 'Pasta', 'Risotto'],
-  order: function (starterIndex, mainIndex) {
-    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
-  },
 
   openingHours: {
     thu: {
@@ -25,11 +22,33 @@ const restaurant = {
       close: 23,
     },
     sat: {
-      open: 0, // Open 24 hours
+      open: 0,
       close: 24,
     },
   },
+  order: function (starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+
+  // destructuring function arguments:
+  orderDelivery: function ({ starterIndex = 1, mainIndex = 0, time }) {
+    console.log(
+      `Order received: ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered at ${time}`
+    );
+  },
 };
+
+// passing in an object of options:
+restaurant.orderDelivery({
+  time: '22:30',
+  mainIndex: 2,
+  starterIndex: 2,
+});
+
+// making use of default values:
+restaurant.orderDelivery({
+  time: '20:00',
+});
 
 // ---- DESTRUCTURING ARRAYS ----
 const arr = [2, 3, 4];
@@ -42,7 +61,7 @@ console.log(first, second);
 
 let [main, , secondary] = restaurant.categories;
 
-// Inverting:
+// Inverting / mutating variables:
 // const temp = main;
 // main = secondary;
 // secondary = temp;
@@ -52,15 +71,49 @@ let [main, , secondary] = restaurant.categories;
 [main, secondary] = [secondary, main];
 console.log(main, secondary);
 
-// Destructuring a function's return value
+// Destructuring a function's return value:
 const [order1, order2] = restaurant.order(2, 0);
 console.log(order1, order2);
 
-// Nested array
+// Nested arrays:
 const nested = [2, 4, [5, 6]];
 const [value1, , [value2, value3]] = nested;
 console.log(value1, value2, value3);
 
-// Assigning the default values
+// Assigning the default values:
 const [el1 = 1, el2 = 1, el3 = 1] = [8, 9];
 console.log(el1, el2, el3);
+
+// ---- DESTRUCTURING OBJECTS ----
+
+const { name, openingHours, categories } = restaurant;
+console.log(name, openingHours, categories);
+
+// Renaming:
+const {
+  name: restaurantName,
+  openingHours: hours,
+  categories: tags,
+} = restaurant;
+
+console.log(restaurantName, hours, tags);
+
+// Assigning the default values + renaming:
+const { menu = [], starterMenu: starters = [] } = restaurant;
+
+console.log(menu, starters);
+
+// Inverting / mutating variables:
+let a = 11;
+let b = 100;
+const obj = { a: 23, b: 56, c: 77 };
+({ a, b } = obj);
+console.log(a, b);
+
+// Nested objects
+const { openingHours: opHours } = restaurant;
+const {
+  fri: { open: o, close: c },
+} = opHours;
+
+console.log(o, c);
