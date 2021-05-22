@@ -40,6 +40,9 @@ const restaurant = {
   orderDish: function (ing1, ing2, ing3) {
     console.log(`Ingredients: ${ing1}, ${ing2}, ${ing3}`);
   },
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient, otherIngredients);
+  },
 };
 
 // passing in an object of options:
@@ -157,3 +160,46 @@ const newRestaurant = { ...restaurant, yearOfFounding: 2000 };
 
 // Creating a shallow copy of an object
 const restaurantCopy = { ...restaurant };
+
+// ---- REST OPERATOR AND PARAMETERS ----
+
+// 1. Destructuring
+
+// SPREAD, because on the RIGHT hand side of =
+const arr3 = [1, 2, ...[3, 4]];
+console.log(arr3);
+
+// REST, because on the LEFT hand side of =
+const [x1, y1, ...others] = [1, 2, 3, 4, 5];
+console.log(others);
+
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherFood);
+
+// REST in objects:
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+// 2. Functions
+
+// Passing an arbitrary amount of arguments by using the rest operator
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) {
+    sum += numbers[i];
+  }
+  return sum;
+};
+
+console.log(add(2, 3));
+console.log(add(1, 4, 7, 8));
+
+// calling the method with the spread operator
+const arr4 = [23, 55, 89];
+console.log(add(...arr4));
+
+restaurant.orderPizza('mushrooms', 'cheese', 'onion', 'olives');
+restaurant.orderPizza('mushrooms');
