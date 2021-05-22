@@ -203,3 +203,39 @@ console.log(add(...arr4));
 
 restaurant.orderPizza('mushrooms', 'cheese', 'onion', 'olives');
 restaurant.orderPizza('mushrooms');
+
+// ---- SHORT CIRCUITING ----
+
+// ---- OR ----
+
+console.log(3 || 'string');
+console.log(0 || 'string');
+console.log('' || 'string');
+console.log(NaN || 'string');
+console.log(undefined || null);
+
+// if one of the values is true, js automatically returns that value
+console.log(undefined || null || 'string' || 23);
+
+// restaurant.numGuests = 23;
+
+const guests = restaurant.numGuests ? restaurant.numGuests : 10;
+console.log(guests);
+
+// Setting the default values with || operand:
+console.log(restaurant.numGuests || 10);
+
+// ---- AND ----
+
+// if one of the values is false, js automatically returns that value
+console.log(null && undefined && 'string' && 23);
+
+// if all values are true, the last one is returned
+console.log(2 && 23 && 'string');
+
+if (restaurant.orderPizza) {
+  restaurant.orderPizza('mashrroms', 'spinach');
+}
+
+// executing the code in the second operand if the first one is true
+restaurant.orderPizza && restaurant.orderPizza('mashrroms', 'spinach');
