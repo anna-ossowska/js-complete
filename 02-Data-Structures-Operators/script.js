@@ -36,6 +36,10 @@ const restaurant = {
       `Order received: ${this.starterMenu[starterIndex]} and ${this.mainMenu[mainIndex]} will be delivered at ${time}`
     );
   },
+
+  orderDish: function (ing1, ing2, ing3) {
+    console.log(`Ingredients: ${ing1}, ${ing2}, ${ing3}`);
+  },
 };
 
 // passing in an object of options:
@@ -110,10 +114,46 @@ const obj = { a: 23, b: 56, c: 77 };
 ({ a, b } = obj);
 console.log(a, b);
 
-// Nested objects
+// Nested objects:
 const { openingHours: opHours } = restaurant;
 const {
   fri: { open: o, close: c },
 } = opHours;
 
 console.log(o, c);
+
+// ---- SPREAD OPERATOR ----
+
+const arr2 = [7, 8, 9];
+const newArr2 = [11, 22, ...arr2];
+console.log(...newArr2);
+
+const newMenu = [...restaurant.mainMenu, 'Gnocchi'];
+console.log(...newMenu);
+
+// Creating the shallow copy of an array:
+const mainMenuCopy = [...restaurant.mainMenu];
+
+// Joining 2 arrays:
+const menuJoined = [...restaurant.starterMenu, ...restaurant.mainMenu];
+console.log(...menuJoined);
+
+// Iterables:
+const str = 'The sentence';
+const letters = [...str, '.'];
+
+// Spread operator used for passing arguments into the function:
+const ingredients = [
+  // prompt('Ingredient1: '),
+  // prompt('Ingredient2: '),
+  // prompt('Ingredient3: '),
+];
+
+console.log(ingredients);
+restaurant.orderDish(...ingredients);
+
+// Spread operator and objects:
+const newRestaurant = { ...restaurant, yearOfFounding: 2000 };
+
+// Creating a shallow copy of an object
+const restaurantCopy = { ...restaurant };
