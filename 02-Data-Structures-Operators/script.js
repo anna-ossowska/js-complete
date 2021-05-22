@@ -251,3 +251,19 @@ console.log(guest);
 // restaurant.numGuests is shortcircuited (since 0 is truthy, it is automatically returned)
 const guestCorrect = restaurant.numGuests ?? 10;
 console.log(guestCorrect);
+
+// ---- FOR OF (ES6 LOOP)  ----
+const menu1 = [...restaurant.starterMenu, ...restaurant.mainMenu];
+for (const item of menu1) console.log(item);
+
+// getting indexes (solution 1)
+for (const item of menu1.entries()) {
+  console.log(`${item[0]} : ${item[1]}`);
+}
+
+// getting indexes (solution 2 with distructuring)
+for (const [i, el] of menu1.entries()) {
+  console.log(`${i} : ${el}`);
+}
+
+// console.log([...menu1.entries()]);
