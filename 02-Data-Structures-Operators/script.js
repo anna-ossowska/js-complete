@@ -267,3 +267,29 @@ for (const [i, el] of menu1.entries()) {
 }
 
 // console.log([...menu1.entries()]);
+
+// ---- ENHANCED OBJECT LITERALS (3 new ES6 features)  ----
+
+const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+const openingHours2 = {
+  // 1. using the square brackets in keys
+  [weekDays[0]]: {
+    open: 8,
+    close: 19,
+  },
+  [weekDays[5]]: {
+    open: 11,
+    close: 15,
+  },
+};
+
+const restaurant2 = {
+  starterMenu: ['Focaccia', 'Bruschetta', 'Garlic Bread', 'Caprese Salad'],
+  mainMenu: ['Pizza', 'Pasta', 'Risotto'],
+  // 2. cleaner function syntax
+  order(starterIndex, mainIndex) {
+    return [this.starterMenu[starterIndex], this.mainMenu[mainIndex]];
+  },
+  // 3. passing an object, and no need to declare its value
+  openingHours2,
+};
