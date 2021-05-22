@@ -239,3 +239,15 @@ if (restaurant.orderPizza) {
 
 // executing the code in the second operand if the first one is true
 restaurant.orderPizza && restaurant.orderPizza('mashrroms', 'spinach');
+
+// ---- NULL COALESCING OPERATOR (??) ----
+restaurant.numGuests = 0;
+
+const guest = restaurant.numGuests || 10;
+console.log(guest);
+
+// This operator works with the concept of nullish values instead of falsy values
+// Nullish values: null, undefined (NOT 0 or '')
+// restaurant.numGuests is shortcircuited (since 0 is truthy, it is automatically returned)
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
