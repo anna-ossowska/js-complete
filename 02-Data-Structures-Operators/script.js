@@ -270,7 +270,7 @@ for (const [i, el] of menu1.entries()) {
 
 // ---- ENHANCED OBJECT LITERALS (3 new ES6 features)  ----
 
-const weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+let weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
 const openingHours2 = {
   // 1. using the square brackets in keys
   [weekDays[0]]: {
@@ -293,3 +293,26 @@ const restaurant2 = {
   // 3. passing an object, and no need to declare its value
   openingHours2,
 };
+
+// ---- OPTIONAL CHAINING (?.)  ----
+
+// checking if element on the left hand side of ? exists
+
+// in objects
+console.log(restaurant.openingHours?.mon?.open); // undefined returned immediately
+
+weekDays = ['mon', 'tue', 'wed', 'thu', 'fri', 'sat', 'sun'];
+
+for (const day of weekDays) {
+  const open = restaurant.openingHours[day]?.open ?? 'closed';
+  console.log(`On ${day} we open at ${open}`);
+}
+
+// in methods
+console.log(restaurant.getDeliveryTime?.() ?? 'Method does not exist.');
+
+// in arrays
+const users = [{ firstName: 'John', email: 'john@gmail.com' }];
+
+console.log(users[0]?.firstName ?? 'User does not exist');
+console.log(users[5]?.firstName ?? 'User does not exist');
