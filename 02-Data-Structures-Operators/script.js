@@ -342,3 +342,44 @@ console.log(entries);
 for (const [day, { open, close }] of entries) {
   console.log(`On ${day} we open at ${open} and close at ${close}.`);
 }
+
+// ---- SETS ----
+
+const ordersSet = new Set([
+  'pasta',
+  'pizza',
+  'pizza',
+  'risotto',
+  'pasta',
+  'pizza',
+]);
+
+console.log(ordersSet);
+
+// useful methods and properties:
+console.log(ordersSet.size);
+
+console.log(ordersSet.has('pizza'));
+console.log(ordersSet.has('bread'));
+
+ordersSet.add('garlic bread');
+
+ordersSet.delete('garlic bread');
+
+// ordersSet.clear();
+
+// retrieving elements from the Set
+for (const order of ordersSet) {
+  console.log(order);
+}
+
+// Use case: removing dulicates from the array
+const staff = ['waiter', 'chef', 'chef', 'manager', 'waiter', 'waiter'];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+
+// Getting the number of unique positions
+console.log(new Set(staff).size);
+
+// Removing duplicated letters from a string
+console.log(new Set('Anna'.toLowerCase()));
