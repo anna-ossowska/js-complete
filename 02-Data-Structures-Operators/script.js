@@ -424,3 +424,41 @@ console.log(rest.get(arrMap));
 // Passing the DOM object as a key
 rest.set(document.body, 'Body');
 console.log(rest);
+
+// ---- MAPS ITERATION ----
+
+const question = new Map([
+  ['question', 'What is the most popular programming language?'],
+  [1, 'Java'],
+  [2, 'JavaScript'],
+  [3, 'Python'],
+  ['correct', 3],
+  [true, 'Correct!'],
+  [false, 'Try again'],
+]);
+
+console.log(question);
+
+// Converting an Object to Map
+console.log(Object.entries(openingHours));
+const hoursMap = new Map(Object.entries(openingHours));
+
+// console.log(hoursMap);
+
+console.log(question.get('question'));
+
+for (const [key, value] of question) {
+  if (typeof key === 'number') {
+    console.log(`${key}. ${value}`);
+  }
+}
+const answer = 3;
+// const answer = Number(prompt('Please type a number:'));
+
+console.log(question.get(question.get('correct') === answer));
+
+// Converting a map to array
+console.log([...question]); // same as console.log(...question.entries());
+// Other methods we can use on maps
+console.log([...question.keys()]);
+console.log([...question.values()]);
