@@ -542,3 +542,41 @@ const plane1 = 'A320neo';
 console.log(plane1.includes('A32'));
 console.log(plane1.startsWith('Boeing'));
 console.log(plane1.endsWith('neo'));
+
+// Split and join
+console.log('a+very+long+sentence'.split('+'));
+
+const [fName, lName] = 'John Doe'.split(' ');
+console.log(fName, lName);
+
+console.log(['a', 'very', 'long', 'sentence'].join(' '));
+
+const namesUpper = [];
+const capitalizeName = function (name) {
+  const names = name.split(' ');
+  for (const n of names) {
+    // namesUpper.push(n[0].toUpperCase() + n.slice(1));
+    namesUpper.push(n[0].replace(n[0], n[0].toUpperCase()) + n.slice(1));
+  }
+  return namesUpper.join(' ');
+};
+
+console.log(capitalizeName('john smith davis'));
+
+// Padding a string - adding a number of chars to the string until the string gets the desired length
+const message = 'Go to gate 23!';
+console.log(message.padStart(25, '+').padEnd(30, '+'));
+console.log('434'.padStart(25, '*'));
+
+const maskCreditCard = function (number) {
+  const str = String(number);
+  const lastFourDigits = str.slice(-4);
+  return lastFourDigits.padStart(str.length, '*');
+};
+
+console.log(maskCreditCard(3509781462147));
+console.log(maskCreditCard('350978146214757547'));
+
+// Repeat
+const message2 = 'Bad weather, all departures delayed...';
+console.log(message2.repeat(4));
