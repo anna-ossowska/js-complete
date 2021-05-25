@@ -462,3 +462,83 @@ console.log([...question]); // same as console.log(...question.entries());
 // Other methods we can use on maps
 console.log([...question.keys()]);
 console.log([...question.values()]);
+
+// ---- STRINGS ----
+
+const airline = 'TAP Air Portugal';
+const plane = 'A320';
+
+console.log(plane[0]);
+console.log('ABCDE'[4]);
+
+console.log(airline.indexOf('T'));
+console.log(airline.indexOf('X')); // -1
+console.log(airline.lastIndexOf('r'));
+
+console.log(airline.slice(4));
+console.log(airline.slice(4, 7));
+
+console.log(airline.slice(airline.lastIndexOf(' ') + 1, airline.length));
+
+console.log(airline.slice(-3));
+
+console.log(airline.slice(1, -1));
+
+const checkMiddleSeat = function (seat) {
+  // B and E are middle seats
+  const s =
+    seat.slice(-1) === 'B' || seat.slice(-1) === 'E'
+      ? 'middle'
+      : 'other than middle';
+  console.log(s);
+};
+
+checkMiddleSeat('11B');
+checkMiddleSeat('12E');
+checkMiddleSeat('09C');
+checkMiddleSeat('13B');
+
+// BOXING
+console.log(typeof new String('Anna')); // converting the primitive type to object
+
+// What happens behind the scenes when we call methods on strings:
+// 1. the primitive is converted to an object (boxing)
+// 2. method is called
+// 3. object is converted back to the primitive type
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fixing capitalization
+const passenger = 'jOnAs';
+
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+const email = 'johndoe@gmail.com';
+const loginEmail = 'JohnDoe@gmail.com \n';
+
+const validEmail = loginEmail.toLowerCase().trim();
+console.log(validEmail === email);
+
+// replacing
+const priceGB = '288.99';
+const pricePL = priceGB.replace('.', ',');
+console.log(pricePL);
+
+const announcement =
+  'All passengers come to boarding door 23. Boarding door 23.';
+
+const announcement1 = announcement.replaceAll('door', 'gate');
+console.log(announcement1);
+
+const announcement2 = announcement.replace(/door/g, 'gate');
+console.log(announcement2);
+
+// Booleans as the return type
+const plane1 = 'A320neo';
+console.log(plane1.includes('A32'));
+console.log(plane1.startsWith('Boeing'));
+console.log(plane1.endsWith('neo'));
