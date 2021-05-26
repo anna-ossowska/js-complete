@@ -49,3 +49,51 @@ for (const [min, event] of gameEvents) {
   const half = min <= 45 ? 'FIRST' : 'SECOND';
   console.log(`[${half} HALF ${min}: ${event}]`);
 }
+
+// Write a program that receives a list of variable names written in underscore_case
+// and convert them to camelCase.
+
+// The input will come from a textarea inserted into the DOM (see code below to
+// insert the elements), and conversion will happen when the button is pressed.
+
+// Test data (pasted to textarea, including spaces):
+// underscore_case
+//  first_name
+// Some_Variable
+//  calculate_AGE
+// delayed_departure
+
+// Should produce this output (5 separate console.log outputs):
+// underscoreCase   ✅
+// firstName        ✅✅
+// someVariable     ✅✅✅
+// calculateAge     ✅✅✅✅
+// delayedDeparture ✅✅✅✅✅
+
+document.body.append(document.createElement('textarea'));
+document.body.append(document.createElement('button'));
+
+const btn = document.querySelector('button');
+const textArea = document.querySelector('textarea');
+const input = textArea.value;
+
+btn.addEventListener('click', function () {
+  const strLowerCase = textArea.value.toLowerCase().replaceAll(' ', '');
+  const strArr = strLowerCase.split('\n');
+  const formattedStrArr = [];
+  let times = 1;
+
+  for (const s of strArr) {
+    const underscore = s.indexOf('_');
+    const firstHalf = s.slice(0, underscore);
+    const secondHalf =
+      s[underscore + 1].toUpperCase() + s.slice(underscore + 2, s.length);
+
+    const output = firstHalf + secondHalf;
+    const icon = '✅'.repeat(times);
+
+    formattedStrArr.push(`${output.padEnd(20)}${icon}`);
+    times++;
+  }
+  console.log(formattedStrArr.join('\n'));
+});
