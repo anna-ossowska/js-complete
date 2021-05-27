@@ -153,3 +153,49 @@ console.log(swiss);
 // Same as:
 book.call(swiss, ...flightData);
 console.log(swiss);
+
+// BIND
+// book.call(eurowings, 23, 'Sarah Williams');
+
+const bookEW = book.bind(eurowings);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEW(591, 'Steven Williams');
+
+// Setting more than one default argument
+const bookEW127 = book.bind(eurowings, 127);
+bookEW127('Kate Johnson');
+
+// bind with the Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+
+  this.planes++;
+
+  console.log(this.planes);
+};
+
+// lufthansa.buyPlane();
+
+const btn = document.querySelector('.buy');
+btn.addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+
+// We do not care about 'this' keyword here, thus, null is passed
+const addVAT = addTax.bind(null, 0.23);
+console.log(addVAT(100));
+
+// Rewriting the function below, so that one returns another one:
+const addTax2 = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+const addVAT2 = addTax2(0.23);
+console.log(addVAT2(100));
