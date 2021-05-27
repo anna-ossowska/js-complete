@@ -55,3 +55,24 @@ console.log(flight);
 // name: "Mr. John Doe"; same as passenger = passeger1
 // (both pointing to the same address on the Heap)
 console.log(passenger1);
+
+// ---- CALLBACK FUNCTIONS ----
+
+const oneWord = function (str) {
+  return str.replaceAll(/ /g, '-').toLowerCase();
+};
+
+const upperFirstWord = function (str) {
+  const [first, ...others] = str.split(' ');
+  return [first.toUpperCase(), ...others].join(' ');
+};
+
+// Higher-order functions accept other functions as their arguments
+// ABSTRACTION achieved by using the callback function
+const transformer = function (str, fn) {
+  console.log(`Transformed string: ${fn(str)}`);
+  console.log(`Transformed by ${fn.name}`); // built-in name property
+};
+
+transformer('This is a very long sentence', upperFirstWord);
+transformer('This is a very long sentence', oneWord);
