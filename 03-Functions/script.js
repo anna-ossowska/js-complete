@@ -96,3 +96,60 @@ greet('Hi')('John');
 const greet2 = greeting => userName => console.log(`${greeting}, ${userName}`);
 
 greet2('Hi')('Jane');
+
+// ---- CALL, APPLY AND BIND METHODS ----
+
+const lufthansa = {
+  airline: 'Lufthansa',
+  iataCode: 'LH',
+  bookings: [],
+  book(flightNum, pName) {
+    console.log(
+      `${pName} booked a seat on ${this.airline} flight ${this.iataCode}${flightNum}.`
+    );
+    this.bookings.push({ flight: `${this.iataCode} ${flightNum}` });
+  },
+};
+
+lufthansa.book(245, 'John Doe');
+lufthansa.book(132, 'Jane Doe');
+console.log(lufthansa);
+
+const eurowings = {
+  airline: 'Eurowings',
+  iataCode: 'EW',
+  bookings: [],
+};
+
+const swiss = {
+  airline: 'Swiss Air Lines',
+  iataCode: 'LX',
+  bookings: [],
+};
+
+// book is not an obj method anymore, it is a regular, independent function
+// thus, 'this' keyword points to undefined
+const book = lufthansa.book;
+// book(23, 'Sarah Williams');
+
+// How to tell js how 'this' keyword should look like?
+// CALL
+
+book.call(eurowings, 23, 'Sarah Williams');
+console.log(eurowings);
+
+book.call(lufthansa, 211, 'John Doe');
+console.log(lufthansa);
+
+book.call(swiss, 112, 'Roberth Smith');
+console.log(swiss);
+
+// APPLY
+// Works the same as call(), however it takes an array of arguments
+const flightData = [901, 'Jane Doe'];
+book.apply(swiss, flightData);
+console.log(swiss);
+
+// Same as:
+book.call(swiss, ...flightData);
+console.log(swiss);
