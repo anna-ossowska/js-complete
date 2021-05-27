@@ -76,3 +76,23 @@ const transformer = function (str, fn) {
 
 transformer('This is a very long sentence', upperFirstWord);
 transformer('This is a very long sentence', oneWord);
+
+// ---- FUNCTIONS RETURNING OTHER FUNCTIONS ----
+
+const greet = function (greeting) {
+  return function (name) {
+    console.log(`${greeting}, ${name}`);
+  };
+};
+
+const greeter = greet('Hello');
+greeter('John');
+greeter('Steven');
+
+// Calling in one go:
+greet('Hi')('John');
+
+// Rewriting using arrow functions:
+const greet2 = greeting => userName => console.log(`${greeting}, ${userName}`);
+
+greet2('Hi')('Jane');
