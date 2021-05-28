@@ -48,12 +48,13 @@ const checkIn = function (flightNum, passenger) {
 
 checkIn(flight, passenger1);
 
-// LH123; same as flightNum = flight
-// (primitive type, pointimg to the different address on the Stack than the original flight)
+// LH123;
+// function call generates a copy of the original flight,
+// pointimg to the different address on the Stack
 console.log(flight);
 
 // name: "Mr. John Doe"; same as passenger = passeger1
-// (both pointing to the same address on the Heap)
+// both pointing to the same address on the Heap
 console.log(passenger1);
 
 // ---- CALLBACK FUNCTIONS ----
@@ -145,7 +146,7 @@ book.call(swiss, 112, 'Roberth Smith');
 console.log(swiss);
 
 // APPLY
-// Works the same as call(), however it takes an array of arguments
+// Works the same as call(), however, it takes an array of arguments
 const flightData = [901, 'Jane Doe'];
 book.apply(swiss, flightData);
 console.log(swiss);
@@ -177,9 +178,10 @@ lufthansa.buyPlane = function () {
   console.log(this.planes);
 };
 
-// lufthansa.buyPlane();
-
 const btn = document.querySelector('.buy');
+
+// making the this keyword point to lufthansa obj
+// not the DOM element, which happens by default
 btn.addEventListener('click', lufthansa.buyPlane.bind(lufthansa));
 
 // Partial application
@@ -199,3 +201,24 @@ const addTax2 = function (rate) {
 
 const addVAT2 = addTax2(0.23);
 console.log(addVAT2(100));
+
+// ---- IMMEDIATELY INVOKED FUNCTION EXPRESSIONS (IIFE) ----
+
+// Are used mostly for the situations when we need to execute the function only ONCE
+
+(function () {
+  console.log('This will never run again.');
+})();
+
+(() => console.log('This will ALSO never run again.'))();
+
+// Before const, let and block scope consepts came to js,
+// IIFEs were used heavily to create function scope and ensure data privacy (data encapsulation)
+
+{
+  const isPrivate = 23;
+  var notPrivate = 22;
+}
+
+// console.log(isPrivate);
+// console.log(notPrivate);
