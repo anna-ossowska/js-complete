@@ -222,3 +222,24 @@ console.log(addVAT2(100));
 
 // console.log(isPrivate);
 // console.log(notPrivate);
+
+// ---- CLOSURES ----
+
+const secureBooking = function () {
+  let passengerCount = 0;
+
+  return function () {
+    passengerCount++;
+    console.log(`${passengerCount} passengers`);
+  };
+};
+
+const booker = secureBooking();
+
+// A function always has an access to the variable environment of the execution context in which it was created, even after that execution context is gone
+
+booker();
+booker();
+booker();
+
+console.dir(booker);
