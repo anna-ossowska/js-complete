@@ -225,6 +225,8 @@ console.log(addVAT2(100));
 
 // ---- CLOSURES ----
 
+// ---- EXAMPLE 1 ----
+
 const secureBooking = function () {
   let passengerCount = 0;
 
@@ -242,4 +244,49 @@ booker();
 booker();
 booker();
 
+// inspecting the variable environment
 console.dir(booker);
+
+// ---- EXAMPLE 2 ----
+
+let f;
+
+const g = function () {
+  const a = 23;
+  f = function () {
+    console.log(a * 2);
+  };
+};
+
+const h = function () {
+  const b = 777;
+  f = function () {
+    console.log(b * 2);
+  };
+};
+
+g();
+// f closed over the variable environmet of g
+f(); // 44
+console.dir(f);
+
+h();
+// ressigned f closed over the variable environmet again, this time of g
+f(); // 1554
+console.dir(f);
+
+// ---- EXAMPLE 3 ----
+
+// callback function was executed independently from the boardPassengers fn, but still it was able to use the variables comming from the variable environment in which callback itself was created (n, perGroup).
+
+const boardPassengers = function (n, wait) {
+  const perGroup = n / 3;
+
+  setTimeout(function () {
+    console.log(`We are now boarding ${n} passengers`);
+    console.log(`There are 3 groups, eaach with ${perGroup} passengers`);
+  }, wait * 1000);
+  console.log(`Will start boarding in ${wait} seconds`);
+};
+
+boardPassengers(120, 5);
