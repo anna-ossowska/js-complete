@@ -71,6 +71,45 @@ const currencies = new Map([
   ['GBP', 'Pound sterling'],
 ]);
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-
 /////////////////////////////////////////////////
+
+let arr = ['a', 'b', 'c', 'd', 'e'];
+
+// SLICE
+// does not mutate the original array
+console.log(arr.slice(2));
+console.log(arr.slice(2, 4));
+console.log(arr.slice(-4));
+console.log(arr.slice(1, -2));
+
+// Creating a shallow copy
+console.log(arr.slice());
+console.log([...arr]);
+
+// SPLICE
+// mutates the original array
+
+// removing the last elelemnt of the array
+arr.splice(-1);
+console.log(arr);
+
+arr = ['a', 'b', 'c', 'd', 'e'];
+console.log(arr.splice(1, 2));
+console.log(arr);
+
+// REVERSE
+// mutates the original array
+arr = ['a', 'b', 'c', 'd', 'e'];
+
+const arr2 = ['j', 'i', 'g', 'h', 'f'];
+console.log(arr2.reverse());
+console.log(arr2);
+
+// CONCAT
+const letters = arr.concat(arr2);
+console.log(letters);
+// Same as:
+console.log([...arr, ...arr2]);
+
+// JOIN
+console.log(letters.join('-'));
