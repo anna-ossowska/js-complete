@@ -113,3 +113,24 @@ console.log([...arr, ...arr2]);
 
 // JOIN
 console.log(letters.join('-'));
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
+for (const [i, m] of movements.entries()) {
+  if (m > 0) {
+    console.log(`${i + 1}. You deposited ${m}.`);
+  } else {
+    console.log(`${i + 1}. You withdrew ${Math.abs(m)}.`);
+  }
+}
+console.log('-------------------------------');
+
+movements.forEach(function (m, i, arr) {
+  if (m > 0) {
+    console.log(`${i + 1}. You deposited ${m}.`);
+  } else {
+    console.log(`${i + 1}. You withdrew ${Math.abs(m)}.`);
+  }
+});
+
+// break statement does not work in forEach loops
