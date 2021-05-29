@@ -65,12 +65,6 @@ const inputClosePin = document.querySelector('.form__input--pin');
 /////////////////////////////////////////////////
 // LECTURES
 
-const currencies = new Map([
-  ['USD', 'United States dollar'],
-  ['EUR', 'Euro'],
-  ['GBP', 'Pound sterling'],
-]);
-
 /////////////////////////////////////////////////
 
 let arr = ['a', 'b', 'c', 'd', 'e'];
@@ -116,6 +110,8 @@ console.log(letters.join('-'));
 
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 
+// ------- FOR...OF vs. FOREACH ----------
+
 for (const [i, m] of movements.entries()) {
   if (m > 0) {
     console.log(`${i + 1}. You deposited ${m}.`);
@@ -124,6 +120,7 @@ for (const [i, m] of movements.entries()) {
   }
 }
 console.log('-------------------------------');
+// break statement does not work in forEach loops
 
 movements.forEach(function (m, i, arr) {
   if (m > 0) {
@@ -133,4 +130,22 @@ movements.forEach(function (m, i, arr) {
   }
 });
 
-// break statement does not work in forEach loops
+// ------- FOREACH WITH MAPS ----------
+
+const currencies = new Map([
+  ['USD', 'United States dollar'],
+  ['EUR', 'Euro'],
+  ['GBP', 'Pound sterling'],
+]);
+
+currencies.forEach(function (value, key, map) {
+  console.log(`${key}: ${value}, ${map}`);
+});
+
+// ------- FOREACH WITH SETS ----------
+
+const currenciesUnique = new Set(['USD', 'EUR', 'USD', 'NOK']);
+
+currenciesUnique.forEach(function (value, _, set) {
+  console.log(`${value}`);
+});
