@@ -61,6 +61,8 @@ const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
 
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
 const displayMovements = function (movements) {
   // empty the container
   containerMovements.innerHTML = '';
@@ -83,6 +85,14 @@ const displayMovements = function (movements) {
 
 displayMovements(account1.movements);
 
+const calcDisplayBalanace = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+
+  labelBalance.textContent = `${balance}€`;
+};
+
+calcDisplayBalanace(movements);
+
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -94,9 +104,7 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
-console.log(accounts);
-console.log(account2.username);
-console.log(account3.username);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -188,8 +196,7 @@ currenciesUnique.forEach(function (value, _, set) {
 
 */
 
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const euroToUsd = 1.1;
+// const euroToUsd = 1.1;
 
 // const movementsUsd = movements.map(function (mov) {
 //   return mov * euroToUsd;
@@ -215,4 +222,58 @@ const movementsDescriptions = movements.map(
 
 console.log(movementsDescriptions);
 
+*/
+
+/*
+const deposits = movements.filter(function (mov) {
+  return mov > 0;
+});
+
+console.log(deposits);
+
+const withdrawals = movements.filter(mov => mov < 0);
+
+console.log(withdrawals);
+
+const depositsFor = [];
+for (const mov of movements) {
+  if (mov > 0) {
+    depositsFor.push(mov);
+  }
+}
+
+console.log(depositsFor);
+*/
+// console.log(movements);
+// const balance = movements.reduce(function (acc, cur, i, arr) {
+//   console.log(`Iteration ${i + 1}: ${acc}`);
+//   return acc + cur;
+// }, 0);
+
+/*
+const balance = movements.reduce((acc, curr) => {
+  return acc + curr;
+}, 0);
+
+console.log(balance);
+
+let balance2 = 0;
+for (const mov of movements) {
+  balance2 += mov;
+}
+
+console.log(balance2);
+*/
+
+/*
+// Maximum value of the movements array:
+const getMax = movements.reduce((acc, mov) => {
+  if (acc > mov) {
+    return acc;
+  } else {
+    return mov;
+  }
+}, movements[0]);
+
+console.log(getMax);
 */
