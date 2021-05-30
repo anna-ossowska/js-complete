@@ -173,3 +173,29 @@ currenciesUnique.forEach(function (value, _, set) {
 });
 
 */
+
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+const euroToUsd = 1.1;
+
+// const movementsUsd = movements.map(function (mov) {
+//   return mov * euroToUsd;
+// });
+
+const movementsUsd = movements.map(mov => mov * euroToUsd);
+
+console.log(movements);
+console.log(movementsUsd);
+
+const movementsUsdfor = [];
+for (const mov of movements) {
+  movementsUsdfor.push(mov * euroToUsd);
+}
+
+console.log(movementsUsdfor);
+
+const movementsDescriptions = movements.map(
+  (mov, i) =>
+    `${i + 1}. You ${mov > 0 ? 'deposited' : 'withdrew'} ${Math.abs(mov)}.`
+);
+
+console.log(movementsDescriptions);
