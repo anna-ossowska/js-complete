@@ -83,37 +83,31 @@ const displayMovements = function (movements) {
   });
 };
 
-displayMovements(account1.movements);
-
 const calcDisplayBalanace = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
 
   labelBalance.textContent = `${balance}€`;
 };
 
-calcDisplayBalanace(movements);
-
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+const calcDisplaySummary = function (acc) {
+  const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumIn.textContent = `${incomes}€`;
   //labelSumIn;
 
-  const outcomes = movements
+  const outcomes = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, curr) => acc + curr, 0);
   labelSumOut.textContent = `${Math.abs(outcomes)}€`;
 
-  const interest = movements
+  const interest = acc.movements
     .filter(mov => mov > 0)
-    .map(deposit => deposit * 0.012)
+    .map(deposit => deposit * (acc.interestRate / 100))
     .filter((interest, i, arr) => interest > 1)
     .reduce((acc, interest) => acc + interest, 0);
   labelSumInterest.textContent = `${interest}€`;
 };
-
-calcDisplaySummary(account1.movements);
 
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
@@ -126,6 +120,45 @@ const createUserNames = function (accs) {
 };
 
 createUserNames(accounts);
+
+let currentAccount;
+
+// Event handlers
+btnLogin.addEventListener('click', function (e) {
+  // prevent form from submitting
+  e.preventDefault();
+
+  // (!)
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+
+  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+    // Clear the input fields
+    inputLoginUsername.value = inputLoginPin.value = '';
+
+    // Make the PIN input field lose its focus and remove the blinking cursor
+    inputLoginPin.blur();
+
+    // Display UI and welcome message
+    labelWelcome.textContent = `Welcome, ${
+      currentAccount.owner.split(' ')[0]
+    }!`;
+
+    containerApp.style.opacity = '1';
+
+    // Display movements
+    displayMovements(currentAccount.movements);
+
+    // Display balance
+    calcDisplayBalanace(currentAccount.movements);
+
+    // Display summary
+    calcDisplaySummary(currentAccount);
+  }
+
+  console.log(currentAccount);
+});
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -300,6 +333,7 @@ const getMax = movements.reduce((acc, mov) => {
 console.log(getMax);
 */
 
+/*
 // Chaining methods
 const euroToUsd = 1.1;
 
@@ -313,3 +347,28 @@ const totalDepositsUsd = movements
   .reduce((acc, curr) => acc + curr, 0);
 
 console.log(totalDepositsUsd);
+*/
+
+// const firstWithdrawal = movements.find(mov => mov < 0);
+
+// console.log(firstWithdrawal);
+
+// console.log(accounts);
+// const account = accounts.find(acc => acc.owner === 'Sarah Smith');
+// console.log(account);
+
+// const accountfor = function (accounts) {
+//   for (const acc of accounts) {
+//     if (acc.owner === 'Sarah Smith') {
+//       return acc;
+//     }
+//   }
+// };
+
+/*
+for (const acc of accounts) {
+  if (acc.owner === 'Sarah Smith') {
+    console.log(acc);
+  }
+}
+*/
