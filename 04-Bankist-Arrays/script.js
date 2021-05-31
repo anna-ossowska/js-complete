@@ -93,6 +93,28 @@ const calcDisplayBalanace = function (movements) {
 
 calcDisplayBalanace(movements);
 
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter(mov => mov > 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumIn.textContent = `${incomes}€`;
+  //labelSumIn;
+
+  const outcomes = movements
+    .filter(mov => mov < 0)
+    .reduce((acc, curr) => acc + curr, 0);
+  labelSumOut.textContent = `${Math.abs(outcomes)}€`;
+
+  const interest = movements
+    .filter(mov => mov > 0)
+    .map(deposit => deposit * 0.012)
+    .filter((interest, i, arr) => interest > 1)
+    .reduce((acc, interest) => acc + interest, 0);
+  labelSumInterest.textContent = `${interest}€`;
+};
+
+calcDisplaySummary(account1.movements);
+
 const createUserNames = function (accs) {
   accs.forEach(function (acc) {
     acc.username = acc.owner
@@ -277,3 +299,17 @@ const getMax = movements.reduce((acc, mov) => {
 
 console.log(getMax);
 */
+
+// Chaining methods
+const euroToUsd = 1.1;
+
+const totalDepositsUsd = movements
+  .filter(mov => mov > 0)
+  .map(mov => mov * euroToUsd)
+  // .map((mov, i, arr) => {
+  //   console.log(arr);
+  //   return mov * euroToUsd;
+  // })
+  .reduce((acc, curr) => acc + curr, 0);
+
+console.log(totalDepositsUsd);
