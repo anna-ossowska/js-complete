@@ -446,9 +446,42 @@ console.log(movements);
 // EQUALITY
 console.log(movements.includes(-130));
 
-// CONDITION
+// SOME: CONDITION
 console.log(movements.some(mov => mov === -130));
 const anyDeposits = movements.some(mov => mov > 500);
 
 console.log(anyDeposits);
 */
+
+// EVERY: CONDITION
+const deposit = mov => mov > 0;
+console.log(movements.every(deposit));
+
+const arr = [
+  [1, 2, 3],
+  [4, 5, 6],
+];
+
+console.log(arr.flat());
+
+const arrDeep = [[[1, 2, 3]], [4, 5, 6]];
+
+console.log(arrDeep.flat(2));
+
+// counting the total balance of all the accounts:
+// FLAT
+const totalBalance = accounts
+  .map(acc => acc.movements)
+  .flat()
+  .reduce((acc, curr) => acc + curr, 0);
+
+console.log(totalBalance);
+
+// FLATMAP
+const totalBalance2 = accounts
+  .flatMap(acc => acc.movements)
+  .reduce((acc, curr) => acc + curr, 0);
+
+console.log(totalBalance2);
+
+// * flatMap() goes only one level deep
