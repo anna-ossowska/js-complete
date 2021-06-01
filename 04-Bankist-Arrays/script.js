@@ -186,6 +186,25 @@ btnTransfer.addEventListener('click', function (e) {
   inputTransferTo.value = inputTransferAmount.value = '';
 });
 
+btnLoan.addEventListener('click', function (e) {
+  e.preventDefault();
+
+  // User can request loan if
+  // there is at least one deposit with at least 10% of requested loan amount
+  const requestedLoan = Number(inputLoanAmount.value);
+
+  const anyDeposit = movements.some(
+    mov => mov > 0 && mov >= requestedLoan * 0.1
+  );
+
+  if (requestedLoan > 0 && anyDeposit) {
+    currentAccount.movements.push(requestedLoan);
+    updateUI(currentAccount);
+  }
+
+  inputLoanAmount.value = '';
+});
+
 // Delete a user
 btnClose.addEventListener('click', function (e) {
   e.preventDefault();
@@ -420,4 +439,16 @@ for (const acc of accounts) {
     console.log(acc);
   }
 }
+*/
+
+/*
+console.log(movements);
+// EQUALITY
+console.log(movements.includes(-130));
+
+// CONDITION
+console.log(movements.some(mov => mov === -130));
+const anyDeposits = movements.some(mov => mov > 500);
+
+console.log(anyDeposits);
 */
