@@ -533,3 +533,34 @@ console.log(sortAsc);
 const sortDesc = movements.sort((a, b) => b - a);
 console.log(sortDesc);
 */
+
+/*
+// EMPTY ARRAYS + FILL METHOD
+const arr = [1, 2, 3, 4, 5, 6, 7];
+console.log(new Array(1, 2, 3, 4, 5));
+
+const x = new Array(7);
+x.fill(1, 3);
+console.log(x);
+
+arr.fill(10, 1, 3);
+console.log(arr);
+
+// Array.from()
+const y = Array.from({ length: 7 }, () => 1);
+console.log(y);
+
+const z = Array.from({ length: 7 }, (_, i) => i + 1);
+console.log(z);
+
+// Let's assume that movements can be retrieved from the UI only
+// Use case: converting the NodeList into an array with Array.from() method
+labelBalance.addEventListener('click', function () {
+  const movementsUI = Array.from(
+    document.querySelectorAll('.movements__value'),
+    el => Number(el.textContent.replace('€', ''))
+  );
+
+  console.log(movementsUI);
+});
+*/
