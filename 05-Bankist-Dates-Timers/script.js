@@ -94,7 +94,7 @@ const displayMovements = function (movements, sort = false) {
         <div class="movements__type movements__type--${type}">${
       i + 1
     } ${type}</div>
-        <div class="movements__value">${mov}€</div>
+        <div class="movements__value">${mov.toFixed(2)}€</div>
       </div>
     `;
 
@@ -104,19 +104,19 @@ const displayMovements = function (movements, sort = false) {
 
 const calcDisplayBalance = function (acc) {
   acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = `${acc.balance}€`;
+  labelBalance.textContent = `${acc.balance.toFixed(2)}€`;
 };
 
 const calcDisplaySummary = function (acc) {
   const incomes = acc.movements
     .filter(mov => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumIn.textContent = `${incomes}€`;
+  labelSumIn.textContent = `${incomes.toFixed(2)}€`;
 
   const out = acc.movements
     .filter(mov => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
-  labelSumOut.textContent = `${Math.abs(out)}€`;
+  labelSumOut.textContent = `${Math.abs(out).toFixed(2)}€`;
 
   const interest = acc.movements
     .filter(mov => mov > 0)
@@ -126,7 +126,7 @@ const calcDisplaySummary = function (acc) {
       return int >= 1;
     })
     .reduce((acc, int) => acc + int, 0);
-  labelSumInterest.textContent = `${interest}€`;
+  labelSumInterest.textContent = `${interest.toFixed(2)}€`;
 };
 
 const createUsernames = function (accs) {
@@ -164,7 +164,7 @@ btnLogin.addEventListener('click', function (e) {
   );
   console.log(currentAccount);
 
-  if (currentAccount?.pin === Number(inputLoginPin.value)) {
+  if (currentAccount?.pin === +inputLoginPin.value) {
     // Display UI and message
     labelWelcome.textContent = `Welcome back, ${
       currentAccount.owner.split(' ')[0]
@@ -182,7 +182,7 @@ btnLogin.addEventListener('click', function (e) {
 
 btnTransfer.addEventListener('click', function (e) {
   e.preventDefault();
-  const amount = Number(inputTransferAmount.value);
+  const amount = +inputTransferAmount.value;
   const receiverAcc = accounts.find(
     acc => acc.username === inputTransferTo.value
   );
@@ -206,7 +206,7 @@ btnTransfer.addEventListener('click', function (e) {
 btnLoan.addEventListener('click', function (e) {
   e.preventDefault();
 
-  const amount = Number(inputLoanAmount.value);
+  const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
@@ -223,7 +223,7 @@ btnClose.addEventListener('click', function (e) {
 
   if (
     inputCloseUsername.value === currentAccount.username &&
-    Number(inputClosePin.value) === currentAccount.pin
+    +inputClosePin.value === currentAccount.pin
   ) {
     const index = accounts.findIndex(
       acc => acc.username === currentAccount.username
@@ -251,3 +251,66 @@ btnSort.addEventListener('click', function (e) {
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
+
+/*
+// ------ CONVERTING AND CHECKING NUMBERS -----
+console.log(23 === 23.0);
+console.log(0.1 + 0.2);
+
+// Type coercion
+console.log(+'23'); // Number 23
+
+// Parsing
+console.log(Number.parseInt('30px', 10));
+console.log(Number.parseInt('e50', 10));
+console.log(Number.parseFloat(' 2.5rem '));
+console.log(Number.parseInt(' 2.5rem '));
+console.log(parseInt('23e'));
+
+// checking if value is a Number
+console.log(Number.isFinite('20'));
+console.log(Number.isFinite(20));
+
+console.log(Number.isInteger(23.5));
+
+// ------ MATH AND ROUNDING -----
+console.log(Math.sqrt(25));
+console.log(25 ** (1 / 2));
+console.log(8 ** (1 / 3));
+
+console.log(Math.max(9, 5, 23));
+console.log(Math.max(9, 5, '23')); // coercion
+console.log(Math.max(9, 5, '23rem')); // parsin does not work NaN
+
+console.log(Math.min(9, 5, 23));
+
+console.log(Math.PI * Number.parseFloat('10px') ** 2);
+
+console.log(Math.floor(Math.random() * 6) + 1);
+
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min) + 1) + min;
+
+console.log(randomInt(5, 12));
+
+// Rounding
+console.log(Math.round(22.298));
+
+// Always rounded up
+console.log(Math.ceil(9.276));
+
+// Always rounded down
+console.log(Math.floor(123.73));
+console.log(Math.floor('123.33')); // coercion (!)
+console.log(Math.trunc(123.22));
+
+// difference between floor and trunc when dealing with negative numbers
+console.log(Math.floor(-2.56));
+console.log(Math.trunc(-2.56));
+
+// toFixed() (returns a string)
+console.log((2.74545).toFixed(2));
+console.log((2.5).toFixed(5));
+
+console.log(+(2.74545).toFixed(2)); // conversion to Number
+*/
