@@ -333,6 +333,10 @@ btnTransfer.addEventListener('click', function (e) {
 
     // Update UI
     updateUI(currentAccount);
+
+    // Clearing the timer if the user shows the activity on the account
+    clearInterval(timer);
+    timer = startLogOutTimer();
   }
 });
 
