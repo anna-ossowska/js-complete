@@ -26,7 +26,7 @@ const account1 = {
     '2021-06-03T10:51:36.790Z',
   ],
   currency: 'EUR',
-  locale: 'pt-PT', // de-DE
+  locale: 'pl-PL',
 };
 
 const account2 = {
@@ -80,7 +80,7 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 // Functions
-const formatMovementDate = function (date) {
+const formatMovementDate = function (date, locale) {
   const calcDaysPassed = (date1, date2) =>
     Math.round(Math.abs(date2 - date1) / (24 * 60 * 60 * 1000));
 
@@ -97,11 +97,12 @@ const formatMovementDate = function (date) {
       return `${daysPassed} days ago`;
       break;
     default:
-      const day = `${date.getDate()}`.padStart(2, '0');
-      const month = `${date.getMonth() + 1}`.padStart(2, '0');
-      const year = date.getFullYear();
+      // const day = `${date.getDate()}`.padStart(2, '0');
+      // const month = `${date.getMonth() + 1}`.padStart(2, '0');
+      // const year = date.getFullYear();
 
-      return `${day}/${month}/${year}`;
+      // return `${day}/${month}/${year}`;
+      return new Intl.DateTimeFormat(locale).format(date);
       break;
   }
 };
@@ -118,7 +119,7 @@ const displayMovements = function (acc, sort = false) {
 
     const date = new Date(acc.movementsDates[i]);
 
-    const displayDate = formatMovementDate(date);
+    const displayDate = formatMovementDate(date, acc.locale);
 
     const html = `
       <div class="movements__row">
@@ -210,14 +211,32 @@ btnLogin.addEventListener('click', function (e) {
 
     // Display the current date and time
     const timeNow = new Date();
-    const day = `${timeNow.getDate()}`.padStart(2, '0');
-    const month = `${timeNow.getMonth() + 1}`.padStart(2, '0');
-    const year = timeNow.getFullYear();
-    const hour = `${timeNow.getHours() + 1}`.padStart(2, '0');
-    const min = `${timeNow.getMinutes() + 1}`.padStart(2, '0');
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    };
+
+    // Setting to whatever language is used by the browser
+    // const locale = navigator.language;
+
+    // Setting to language of the current user
+    const locale = currentAccount.locale;
+
+    labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(
+      timeNow
+    );
+    // const timeNow = new Date();
+    // const day = `${timeNow.getDate()}`.padStart(2, '0');
+    // const month = `${timeNow.getMonth() + 1}`.padStart(2, '0');
+    // const year = timeNow.getFullYear();
+    // const hour = `${timeNow.getHours() + 1}`.padStart(2, '0');
+    // const min = `${timeNow.getMinutes() + 1}`.padStart(2, '0');
 
     // day/month/year
-    labelDate.textContent = `${day}/${month}/${year} ${hour}:${min}`;
+    // labelDate.textContent = `${day}/${month}/${year} ${hour}:${min}`;
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
@@ -454,4 +473,28 @@ const days2 = calcDaysPassed(
 );
 console.log(days1);
 console.log(days2);
+*/
+
+// ------ INTERNATIONALIZING DATES (INTL) -----
+
+/*
+//Experimentinng with Intl API
+const timeNow = new Date();
+const options = {
+  hour: 'numeric',
+  minute: 'numeric',
+  day: '2-digit',
+  month: 'long',
+  year: 'numeric',
+  weekday: 'long', // short, narrow
+};
+
+// Setting to whatever language is used by the browser
+const locale = navigator.language;
+
+labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(
+  timeNow
+);
+
+// As of Thursday, June 03, 2021, 6:45 PM
 */
