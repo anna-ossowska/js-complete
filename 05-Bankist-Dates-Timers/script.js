@@ -306,14 +306,16 @@ btnLoan.addEventListener('click', function (e) {
   const amount = Math.floor(inputLoanAmount.value);
 
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
-    // Add movement
-    currentAccount.movements.push(amount);
+    setTimeout(function () {
+      // Add movement
+      currentAccount.movements.push(amount);
 
-    // Add loan date
-    currentAccount.movementsDates.push(new Date().toISOString());
+      // Add loan date
+      currentAccount.movementsDates.push(new Date().toISOString());
 
-    // Update UI
-    updateUI(currentAccount);
+      // Update UI
+      updateUI(currentAccount);
+    }, 2500);
   }
   inputLoanAmount.value = '';
 });
@@ -525,6 +527,7 @@ labelDate.textContent = new Intl.DateTimeFormat(locale, options).format(
 // As of Thursday, June 03, 2021, 6:45 PM
 */
 
+/*
 // ------ INTERNATIONALIZING NUMBERS (INTL) -----
 const num = 395456.2323;
 
@@ -544,3 +547,58 @@ console.log(
   navigator.language,
   new Intl.NumberFormat(navigator.language).format(num)
 );
+*/
+
+// ------ TIMERS ------
+// setTimeout(() => console.log('Here comes your order'), 3000);
+// console.log('Waiting...');
+
+/*
+setTimeout(
+  (ing1, ing2) =>
+    console.log(`Here comes your pizza with: ${ing1} and ${ing2}.`),
+  3000,
+  'olives',
+  'spinach'
+);
+console.log('Waiting...');
+*/
+
+/*
+// Cancelling timer
+const ingredients = ['olives', 'spinach'];
+
+const orderTimer = setTimeout(
+  (ing1, ing2) =>
+    console.log(`Here comes your pizza with: ${ing1} and ${ing2}.`),
+  3000,
+  ...ingredients
+);
+
+console.log('Waiting...');
+
+if (ingredients.includes('spinach')) {
+  clearTimeout(orderTimer);
+}
+*/
+
+/*
+// setInterval
+setInterval(function () {
+  const now = new Date();
+  console.log(now);
+}, 1000);
+*/
+
+/*
+// Real clock h:min:s
+setInterval(function () {
+  const now = new Date();
+
+  const hour = now.getHours().toString().padStart(2, '0');
+  const min = now.getMinutes().toString().padStart(2, '0');
+  const sec = now.getSeconds().toString().padStart(2, '0');
+
+  console.log(`${hour}:${min}:${sec}`);
+}, 1000);
+*/
