@@ -1,0 +1,67 @@
+@import 'https://fonts.googleapis.com/css?family=Poppins';
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  letter-spacing: 0.25rem;
+  font-size: 4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(
+      to right bottom,
+      rgba(187, 224, 253, 0.9),
+      rgba(81, 146, 243, 0.6)
+    ),
+    url('https://images.unsplash.com/photo-1516715094483-75da7dee9758?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1867&q=80')
+      no-repeat center top/cover;
+}
+
+.container {
+  border: 1rem #fff solid;
+  padding: 9rem 14rem;
+  min-width: 120rem;
+  max-width: 120rem;
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+h1,
+h2 {
+  width: 100%;
+  text-align: center;
+  color: #fff;
+}
+
+h1 {
+  font-size: 10rem;
+  padding: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.5rem;
+}
+
+h2 {
+  font-size: 6rem;
+  padding: 1rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.75rem;
+}
+
+span {
+  font-size: 3rem;
+}
