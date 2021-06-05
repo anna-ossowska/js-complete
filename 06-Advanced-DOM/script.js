@@ -30,3 +30,59 @@ document.addEventListener('keydown', function (e) {
     closeModal();
   }
 });
+
+///////////////// LECTURES ////////////////
+
+// --------- SELECTING ELEMENTS -----------
+
+// Selecting the entire document
+// It is a reference to the root element of the document (<html>)
+console.log(document.documentElement);
+console.log(document.head);
+console.log(document.body);
+
+const header = document.querySelector('header');
+const allSections = document.querySelectorAll('.section');
+console.log(allSections);
+
+document.getElementById('section--1');
+
+// Return HTML Collection
+const allButtons = document.getElementsByTagName('button');
+console.log(document.getElementsByClassName('btn'));
+
+// --------- CREATING AND INSERTING ELEMENTS -----------
+
+// .insertAdjacentHTML
+
+// it's not yet in the DOM itself
+const message = document.createElement('div');
+message.classList.add('cookie-message');
+// message.textContent =
+//   'We use cookies for improved functionality and analytics.';
+
+message.innerHTML =
+  'We use cookies for improved functionality and analytics.<button class="btn btn--close-cookie">Got it!</button>';
+
+// INSERTS the message element as the first child of the header
+header.prepend(message);
+
+// MOVES the message position into being the last child of the header
+header.append(message);
+
+// INSERTS the message as the last child of the header
+// (both first and last are visible now)
+// header.append(message.cloneNode(true));
+
+// INSERTS the message as a sibling of the header
+// header.before(message);
+// header.after(message);
+
+// --------- DELETING ELEMENTS -----------
+document
+  .querySelector('.btn--close-cookie')
+  .addEventListener('click', function () {
+    message.remove();
+    // the old way: selecting the parent first
+    // message.parentElement.removeChild(message)
+  });
