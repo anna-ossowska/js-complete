@@ -33,6 +33,7 @@ document.addEventListener('keydown', function (e) {
 
 ///////////////// LECTURES ////////////////
 
+/*
 // --------- SELECTING ELEMENTS -----------
 
 // Selecting the entire document
@@ -86,3 +87,61 @@ document
     // the old way: selecting the parent first
     // message.parentElement.removeChild(message)
   });
+
+// --------- STYLES -----------
+
+// setting the in-line styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+// reading the inline style set by ourselves
+console.log(message.style.backgroundColor);
+
+// reading all the styles
+console.log(getComputedStyle(message));
+console.log(getComputedStyle(message).color);
+console.log(getComputedStyle(message).height);
+
+// Adding to the existing value
+message.style.height =
+  Number.parseFloat(getComputedStyle(message).height, 10) + 30 + 'px';
+
+// Changing the variable inside the root of the document
+// document.documentElement.style.setProperty('--color-primary', 'orangered');
+
+// --------- ATTRIBUTES -----------
+const logo = document.querySelector('.nav__logo');
+
+console.log((logo.alt = 'Minimalist logo'));
+
+// NOT .class (!)
+console.log(logo.className);
+
+// Non-standard attributes
+console.log(logo.designer);
+console.log(logo.getAttribute('designer'));
+console.log(logo.setAttribute('company', 'Bankist'));
+
+// returns the absolute URL
+console.log(logo.src);
+// returns the relative URL
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// --------- DATA ATTRIBUTE -----------
+// they start with the word 'data
+// data-version-number --> veersionNumber
+console.log(logo.dataset.versionNumber); // 3.0
+
+// --------- CLASSES -----------
+logo.classList.add('c', 'd');
+logo.classList.remove('c');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // NOT includes
+
+// overwrites all the existing classes
+// logo.className = 'random';
+*/
