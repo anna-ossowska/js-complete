@@ -31,6 +31,39 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+// Smooth scrolling
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.getElementById('section--1');
+
+btnScrollTo.addEventListener('click', function () {
+  // get the coordinates of element you want to scroll to
+  const s1coords = section1.getBoundingClientRect();
+
+  // DOMRect object
+  console.log(s1coords);
+
+  console.log(`top: ${s1coords.top}`);
+
+  console.log('Current scroll (X/Y)', window.pageXOffset, window.pageYOffset);
+
+  console.log(
+    'Viewport height/width',
+    document.documentElement.clientHeight,
+    document.documentElement.clientWidth
+  );
+
+  // OLD WAY
+  window.scrollTo({
+    left: s1coords.left + window.pageXOffset,
+    top: s1coords.top + window.pageYOffset,
+    behavior: 'smooth',
+  });
+
+  // MODERN WAY
+  // still not supported by some browsers
+  section1.scrollIntoView({ behavior: 'smooth' });
+});
+
 ///////////////// LECTURES ////////////////
 
 /*
