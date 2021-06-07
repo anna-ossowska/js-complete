@@ -99,6 +99,34 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
   }
 });
 
+///////////////////////////////////////
+// Tabbed component
+
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+tabsContainer.addEventListener('click', function (e) {
+  // finding the closest parent with '.operations__tab' class name
+  const clicked = e.target.closest('.operations__tab');
+
+  // Guard clause
+  // if there is no 'clicked', return immediately
+  if (!clicked) return;
+
+  // Remove active classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  tabsContent.forEach(c => c.classList.remove('operations__content--active'));
+
+  // Activate tab
+  clicked.classList.add('operations__tab--active');
+
+  // Activate content area
+  document
+    .querySelector(`.operations__content--${clicked.dataset.tab}`)
+    .classList.add('operations__content--active');
+});
+
 ///////////////// LECTURES ////////////////
 
 /*
@@ -272,6 +300,7 @@ document.querySelector('nav').addEventListener('click', function (e) {
 });
 */
 
+/*
 // --------- DOM TRAVERSING -----------
 // Walking through the DOM
 
@@ -282,13 +311,10 @@ const h1 = document.querySelector('h1');
 console.log(h1.querySelectorAll('.highlight'));
 console.log(h1.childNodes);
 console.log(h1.children);
-console.log('xxx');
 h1.firstElementChild.style.color = 'white';
 h1.lastElementChild.style.color = 'orangered';
 
 // GOING UPWARDS: PARENTS
-
-console.log('xxxxxxxxxxxxxx');
 console.log(h1.parentNode);
 console.log(h1.parentElement);
 
@@ -315,3 +341,4 @@ console.log(h1.parentElement.children);
     el.style.transform = 'scale(0.5)';
   }
 });
+*/
