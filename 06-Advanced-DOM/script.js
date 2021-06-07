@@ -1,12 +1,15 @@
 'use strict';
 
-///////////////////////////////////////
-// Modal window
-
 const modal = document.querySelector('.modal');
 const overlay = document.querySelector('.overlay');
 const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
+
+const btnScrollTo = document.querySelector('.btn--scroll-to');
+const section1 = document.getElementById('section--1');
+
+///////////////////////////////////////
+// Modal window
 
 const openModal = function (e) {
   // removing the jumping effect when click on an anchor
@@ -31,9 +34,8 @@ document.addEventListener('keydown', function (e) {
   }
 });
 
+///////////////////////////////////////
 // Smooth scrolling
-const btnScrollTo = document.querySelector('.btn--scroll-to');
-const section1 = document.getElementById('section--1');
 
 btnScrollTo.addEventListener('click', function () {
   // get the coordinates of element you want to scroll to
@@ -62,6 +64,39 @@ btnScrollTo.addEventListener('click', function () {
   // MODERN WAY
   // still not supported by some browsers
   section1.scrollIntoView({ behavior: 'smooth' });
+});
+
+///////////////////////////////////////
+// Navigation
+
+/*
+document.querySelectorAll('.nav__link').forEach(function (el) {
+  el.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log('LINK');
+    const id = this.getAttribute('href');
+    console.log(id);
+
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  });
+});
+*/
+
+// EVENT DELEGATION
+
+// 1. Add an eventListener on the parent element of all the elements that you are interesed in
+// 2. Determine which element originated the event
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  e.preventDefault();
+  console.log(e.target);
+
+  // Matching strategy
+  if (e.target !== this) {
+    // e.target.classList.contains('nav__link');
+    const id = e.target.getAttribute('href');
+    document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  }
 });
 
 ///////////////// LECTURES ////////////////
@@ -199,6 +234,7 @@ setTimeout(() => h1.removeEventListener('mouseenter', runAlerth1), 1000);
 // };
 */
 
+/*
 // --------- EVENT PROPAGATION: BUBBLING AND CAPTURING-----------
 // rgb(255,255,255)
 const randomInt = (min, max) =>
@@ -233,4 +269,49 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 document.querySelector('nav').addEventListener('click', function (e) {
   this.style.backgroundColor = randomColor();
   console.log('CONTAINER', e.target, e.currentTarget);
+});
+*/
+
+// --------- DOM TRAVERSING -----------
+// Walking through the DOM
+
+const h1 = document.querySelector('h1');
+
+// GOING DOWNWARDS: CHILDREN
+
+console.log(h1.querySelectorAll('.highlight'));
+console.log(h1.childNodes);
+console.log(h1.children);
+console.log('xxx');
+h1.firstElementChild.style.color = 'white';
+h1.lastElementChild.style.color = 'orangered';
+
+// GOING UPWARDS: PARENTS
+
+console.log('xxxxxxxxxxxxxx');
+console.log(h1.parentNode);
+console.log(h1.parentElement);
+
+h1.closest('.header').style.background = 'var(--gradient-secondary)';
+
+// element itself
+h1.closest('h1').style.background = 'var(--gradient-primary)';
+
+// GOING SIDEWAYS: SIBLINGS
+
+// Nodes
+console.log(h1.nextSibling);
+console.log(h1.previousSibling);
+
+// Elements
+console.log(h1.previousElementSibling);
+console.log(h1.nextElementSibling);
+
+// Getting all the siblings of h1
+console.log(h1.parentElement.children);
+
+[...h1.parentElement.children].forEach(el => {
+  if (el !== h1) {
+    el.style.transform = 'scale(0.5)';
+  }
 });
