@@ -180,7 +180,7 @@ logo.classList.contains('c'); // NOT includes
 */
 
 // --------- REMOVING EVENT LISTENERS -----------
-
+/*
 const h1 = document.querySelector('h1');
 
 // Listening to an event only ONCE
@@ -197,3 +197,40 @@ setTimeout(() => h1.removeEventListener('mouseenter', runAlerth1), 1000);
 // h1.onmouseenter = function () {
 //   alert('onmouseenter: heading');
 // };
+*/
+
+// --------- EVENT PROPAGATION: BUBBLING AND CAPTURING-----------
+// rgb(255,255,255)
+const randomInt = (min, max) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
+const randomColor = () =>
+  `rgb(${randomInt(0, 255)}, ${randomInt(0, 255)}, ${randomInt(0, 255)})`;
+console.log(randomColor());
+
+// If we click at .nav__link, its parents (.nav__links and .nav) also get their random colors
+// event happens at the document root, then travells down to the target element
+// from there is bubbles up
+// bubbling up means that event is triggered also in all of the parent elements, because they all listen to the same event ('click')
+
+// e.target points to where the event originates
+// 'this' keyword points to the element on which the event handler is attached to
+
+document.querySelector('.nav__link').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINK', e.target, e.currentTarget);
+  console.log(this === e.currentTarget);
+
+  // Stop propagation
+  // e.stopPropagation();
+});
+
+document.querySelector('.nav__links').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('LINKS', e.target, e.currentTarget);
+});
+
+document.querySelector('nav').addEventListener('click', function (e) {
+  this.style.backgroundColor = randomColor();
+  console.log('CONTAINER', e.target, e.currentTarget);
+});
