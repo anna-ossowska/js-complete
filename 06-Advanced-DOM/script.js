@@ -178,3 +178,22 @@ logo.classList.contains('c'); // NOT includes
 // overwrites all the existing classes
 // logo.className = 'random';
 */
+
+// --------- REMOVING EVENT LISTENERS -----------
+
+const h1 = document.querySelector('h1');
+
+// Listening to an event only ONCE
+const runAlerth1 = function () {
+  alert('addEventListener: heading');
+  // h1.removeEventListener('mouseenter', alerth1);
+};
+
+h1.addEventListener('mouseenter', runAlerth1);
+
+setTimeout(() => h1.removeEventListener('mouseenter', runAlerth1), 1000);
+
+// Old school way of listening to an event
+// h1.onmouseenter = function () {
+//   alert('onmouseenter: heading');
+// };
