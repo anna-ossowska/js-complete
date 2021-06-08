@@ -15,6 +15,8 @@ const tabsContent = document.querySelectorAll('.operations__content');
 const nav = document.querySelector('nav');
 
 const header = document.querySelector('.header');
+
+const allSections = document.querySelectorAll('.section');
 ///////////////////////////////////////
 // Modal window
 
@@ -204,13 +206,31 @@ const options = {
 const headerObserver = new IntersectionObserver(stickyNav, options);
 headerObserver.observe(header);
 
-// let scrolled = false;
-// if (!scrolled && window.pageYOffset > 400) {
-//   nav.classList.add('sticky');
-//   scrolled = true;
-// } else {
-//   scrolled = false;
-//   nav.classList.remove('sticky');
+///////////////////////////////////////
+// Reveal sections
+
+const revealSection = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  // Guard clause
+  if (!entry.isIntersecting) return;
+  entry.target.classList.remove('section--hidden');
+  observer.unobserve(entry.target);
+};
+
+const revOptions = {
+  root: null,
+  threshold: 0.15,
+};
+
+const sectionObserver = new IntersectionObserver(revealSection, revOptions);
+
+allSections.forEach(function (section) {
+  section.classList.add('section--hidden');
+  sectionObserver.observe(section);
+});
+
 ///////////////// LECTURES ////////////////
 
 /*
