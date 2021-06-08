@@ -8,6 +8,11 @@ const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.getElementById('section--1');
 
+const tabs = document.querySelectorAll('.operations__tab');
+const tabsContainer = document.querySelector('.operations__tab-container');
+const tabsContent = document.querySelectorAll('.operations__content');
+
+const nav = document.querySelector('nav');
 ///////////////////////////////////////
 // Modal window
 
@@ -89,7 +94,6 @@ document.querySelectorAll('.nav__link').forEach(function (el) {
 
 document.querySelector('.nav__links').addEventListener('click', function (e) {
   e.preventDefault();
-  console.log(e.target);
 
   // Matching strategy
   if (e.target !== this) {
@@ -101,10 +105,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 
 ///////////////////////////////////////
 // Tabbed component
-
-const tabs = document.querySelectorAll('.operations__tab');
-const tabsContainer = document.querySelector('.operations__tab-container');
-const tabsContent = document.querySelectorAll('.operations__content');
 
 tabsContainer.addEventListener('click', function (e) {
   // finding the closest parent with '.operations__tab' class name
@@ -127,11 +127,44 @@ tabsContainer.addEventListener('click', function (e) {
     .classList.add('operations__content--active');
 });
 
+///////////////////////////////////////
+// Menu fade on hover
+
+// Only one argument can be passed to the handler
+const handleHover = function (e) {
+  // console.log(this, e.currentTarget);
+  if (e.target.classList.contains('nav__link')) {
+    // DOM traversing: moving up twice
+    const siblings = link.closest('.nav').querySelectorAll('.nav__link');
+
+    const logo = link.closest('.nav').querySelector('img');
+
+    // change the opacity of siblings
+    siblings.forEach(el => {
+      if (el !== link) el.style.opacity = this;
+    });
+
+    logo.style.opacity = this;
+  }
+};
+
+// nav.addEventListener('mouseover', function (e) {
+//   handleHover(e, 0.5);
+// });
+
+// nav.addEventListener('mouseout', function (e) {
+//   handleHover(e, 1);
+// });
+
+// Passing an 'argument' into the handler
+// 'this' keyword set to 0.5 and 1
+nav.addEventListener('mouseover', handleHover.bind(0.5));
+nav.addEventListener('mouseout', handleHover.bind(1));
 ///////////////// LECTURES ////////////////
 
 /*
-// --------- SELECTING ELEMENTS -----------
-
+/--- SELECTING ELEMENTS -----------
+/ ------
 // Selecting the entire document
 // It is a reference to the root element of the document (<html>)
 console.log(document.documentElement);
