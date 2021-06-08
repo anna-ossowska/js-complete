@@ -120,6 +120,7 @@ img {
   width: 100%;
   padding: 0 6rem;
   z-index: 100;
+  transition: background-color 0.25s ease-in-out;
 }
 
 /* nav and stickly class at the same time */

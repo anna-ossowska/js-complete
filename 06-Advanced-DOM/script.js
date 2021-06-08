@@ -162,6 +162,28 @@ const handleHover = function (e) {
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
 
+///////////////////////////////////////
+// Sticky navbar
+
+const initialCoords = section1.getBoundingClientRect();
+// console.log(initialCoords);
+
+window.addEventListener('scroll', function () {
+  // console.log(window.pageYOffset);
+  if (window.pageYOffset > initialCoords.top) {
+    nav.classList.add('sticky');
+  } else {
+    nav.classList.remove('sticky');
+  }
+});
+
+// let scrolled = false;
+// if (!scrolled && window.pageYOffset > 400) {
+//   nav.classList.add('sticky');
+//   scrolled = true;
+// } else {
+//   scrolled = false;
+//   nav.classList.remove('sticky');
 ///////////////// LECTURES ////////////////
 
 /*
