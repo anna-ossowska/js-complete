@@ -13,6 +13,8 @@ const tabsContainer = document.querySelector('.operations__tab-container');
 const tabsContent = document.querySelectorAll('.operations__content');
 
 const nav = document.querySelector('nav');
+
+const header = document.querySelector('.header');
 ///////////////////////////////////////
 // Modal window
 
@@ -165,6 +167,9 @@ nav.addEventListener('mouseout', handleHover.bind(1));
 ///////////////////////////////////////
 // Sticky navbar
 
+// Method nr 1: using the 'scroll' event
+
+/*
 const initialCoords = section1.getBoundingClientRect();
 // console.log(initialCoords);
 
@@ -176,6 +181,28 @@ window.addEventListener('scroll', function () {
     nav.classList.remove('sticky');
   }
 });
+*/
+
+// Method nr 2: Intersection Observer API
+
+const navHeight = nav.getBoundingClientRect().height;
+
+const stickyNav = function (entries) {
+  const [entry] = entries; // same as entries[0]
+  // console.log(entry);
+
+  if (!entry.isIntersecting) nav.classList.add('sticky');
+  else nav.classList.remove('sticky');
+};
+
+const options = {
+  root: null,
+  threshold: 0, // looking for a moment when the header is completely out of the view
+  rootMargin: `-${navHeight}px`,
+};
+
+const headerObserver = new IntersectionObserver(stickyNav, options);
+headerObserver.observe(header);
 
 // let scrolled = false;
 // if (!scrolled && window.pageYOffset > 400) {
@@ -398,4 +425,21 @@ console.log(h1.parentElement.children);
     el.style.transform = 'scale(0.5)';
   }
 });
+*/
+
+/*
+// --------- THE INTERSECTION OBSERVER API-----------
+const obsCallback = function (entries, observer) {
+  entries.forEach(e => console.log(e));
+};
+
+const obsOptions = {
+  root: null,
+  threshold: [0, 0.2],
+};
+
+const observer = new IntersectionObserver(obsCallback, obsOptions);
+
+// target
+observer.observe(section1);
 */
