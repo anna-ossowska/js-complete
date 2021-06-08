@@ -133,7 +133,8 @@ tabsContainer.addEventListener('click', function (e) {
 // Only one argument can be passed to the handler
 const handleHover = function (e) {
   // console.log(this, e.currentTarget);
-  if (e.target.classList.contains('nav__link')) {
+  const link = e.target;
+  if (link.classList.contains('nav__link')) {
     // DOM traversing: moving up twice
     const siblings = link.closest('.nav').querySelectorAll('.nav__link');
 
@@ -160,6 +161,7 @@ const handleHover = function (e) {
 // 'this' keyword set to 0.5 and 1
 nav.addEventListener('mouseover', handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
+
 ///////////////// LECTURES ////////////////
 
 /*
