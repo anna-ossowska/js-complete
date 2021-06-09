@@ -231,6 +231,39 @@ allSections.forEach(function (section) {
   sectionObserver.observe(section);
 });
 
+///////////////////////////////////////
+// Lazy loading images
+
+const loadImages = function (entries, observer) {
+  const [entry] = entries;
+  // console.log(entry);
+
+  if (!entry.isIntersecting) return;
+
+  // replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+
+  // wait for the load event
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+
+  observer.unobserve(entry.target);
+};
+
+const imgOptions = {
+  root: null,
+  threshold: 0,
+  rootMargin: '-100px',
+};
+
+const imgObserver = new IntersectionObserver(loadImages, imgOptions);
+
+// looking for images with the data-src attribute
+const imageTargets = document.querySelectorAll('img[data-src]');
+
+imageTargets.forEach(img => imgObserver.observe(img));
+
 ///////////////// LECTURES ////////////////
 
 /*
