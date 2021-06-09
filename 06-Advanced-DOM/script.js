@@ -275,6 +275,8 @@ let currSlide = 0;
 const maxSlide = slides.length;
 
 const slider = document.querySelector('.slider');
+const dotContainer = document.querySelector('.dots');
+
 /*
 slider.style.transform = 'scale(0.4) translateX(-800px)';
 slider.style.overflow = 'visible';
@@ -287,6 +289,28 @@ slides.forEach((s, i) => {
 });
 */
 
+const createDots = function () {
+  slides.forEach((_, i) => {
+    dotContainer.insertAdjacentHTML(
+      'beforeend',
+      `<button class="dots__dot" data-slide="${i}"></button>`
+    );
+  });
+};
+
+createDots();
+
+const activateDot = function (slide) {
+  document
+    .querySelectorAll('.dots__dot')
+    .forEach(dot => dot.classList.remove('dots__dot--active'));
+
+  // element containg data set attribute which contains a number reffering to the current slide
+  document
+    .querySelector(`.dots__dot[data-slide="${slide}"]`)
+    .classList.add('dots__dot--active');
+};
+
 const goToSlide = function (slide) {
   // -100%,  0%,  100%,  200%
   slides.forEach((s, i) => {
@@ -295,6 +319,7 @@ const goToSlide = function (slide) {
 };
 
 goToSlide(0);
+activateDot(0);
 
 // Go to the next slide
 const nextSlide = function () {
@@ -305,10 +330,11 @@ const nextSlide = function () {
   }
 
   goToSlide(currSlide);
+  activateDot(currSlide);
 };
 
 const prevSlide = function () {
-  console.log(currSlide);
+  // console.log(currSlide);
   if (currSlide === 0) {
     currSlide = maxSlide - 1;
   } else {
@@ -316,10 +342,26 @@ const prevSlide = function () {
   }
 
   goToSlide(currSlide);
+  activateDot(currSlide);
 };
 
 btnRight.addEventListener('click', nextSlide);
 btnLeft.addEventListener('click', prevSlide);
+
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'ArrowRight') nextSlide();
+  if (e.key === 'ArrowLeft') prevSlide();
+});
+
+dotContainer.addEventListener('click', function (e) {
+  if (e.target.classList.contains('dots__dot')) {
+    // const slide = e.target.dataset.slide;
+    const { slide } = e.target.dataset;
+
+    goToSlide(slide);
+    activateDot(slide);
+  }
+});
 
 // ACTIVE SLIDE --> 0%
 
