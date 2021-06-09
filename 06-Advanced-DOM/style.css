@@ -458,7 +458,7 @@ h4 {
 
 .dots__dot--active {
   /* background-color: #fff; */
-  background-color: #fff;
+  background-color: var(--color-primary);
   opacity: 1;
 }
 
