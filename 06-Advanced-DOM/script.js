@@ -371,6 +371,7 @@ slides.forEach((s, i) => {
 };
 
 slider();
+
 // ACTIVE SLIDE --> 0%
 
 // 1st click
@@ -622,4 +623,22 @@ const observer = new IntersectionObserver(obsCallback, obsOptions);
 
 // target
 observer.observe(section1);
+*/
+
+/*
+// --------- LIFECYCLE DOM EVENTS -----------
+
+document.addEventListener('DOMContentLoaded', function (e) {
+  console.log('HTML parsed and DOM tree built', e);
+});
+
+window.addEventListener('load', function (e) {
+  console.log('Page fully loaded, including images', e);
+});
+
+// use case: filling-up forms asking users if they are 100% they want to leave the page
+window.addEventListener('beforeunload', function (e) {
+  console.log('Created imediately before user leaves the page', e);
+  e.returnValue = '';
+});
 */
