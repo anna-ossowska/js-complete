@@ -54,3 +54,30 @@ console.log(john.species, jane.species);
 
 console.log(john.hasOwnProperty('firstName'));
 console.log(john.hasOwnProperty('species'));
+console.log(Person.prototype.constructor);
+
+// ------ PROTOTYPAL INHERITANCE ON BUILT-IN OBJECTS ------
+console.log(john.__proto__);
+
+// Object.prototype (top of prototype chain)
+console.log(john.__proto__.__proto__); // Object
+console.log(john.__proto__.__proto__.__proto__); // null
+
+console.dir(Person.prototype.constructor);
+
+const arr = [5, 5, 7, 11, 2, 13, 7]; // new Array(5, 5, 7, 11, 2, 13, 7)
+console.log(arr.__proto__); // each array inherits array methods from its prototype
+console.log(arr.__proto__ === Array.prototype);
+
+// Adding a new method to the prototype property of an Array constructor
+// All the arrays automatically inherit this method
+Array.prototype.unique = function () {
+  return [...new Set(this)];
+};
+
+console.log(arr.unique());
+
+const body = document.body;
+console.dir(body);
+
+console.dir(x => x + 1);
