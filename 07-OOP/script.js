@@ -81,3 +81,42 @@ const body = document.body;
 console.dir(body);
 
 console.dir(x => x + 1);
+
+// ------ ES6 CLASSES ------
+
+// 1. Classes are NOT hoisted
+// 2. Classes are first-class citizens
+// // (we can pass them into functions and return them from funtions)
+// 3. Classes are executed in the strict mode
+
+// class expression
+// const PersonCl = class {
+// }
+
+// class declaration
+class PersonCl {
+  constructor(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  }
+
+  // Methods are added to .prototype property
+  calcAge() {
+    console.log(2021 - this.birthYear);
+  }
+
+  getFirstName() {
+    console.log(`${this.firstName}`);
+  }
+}
+
+// PersonCl.prototype.getFirstName = function () {
+//   console.log(`${this.firstName}`);
+// };
+
+const jack = new PersonCl('Jack', 1987);
+
+jack.calcAge();
+jack.getFirstName();
+
+console.log(jack.__proto__ === PersonCl.prototype);
