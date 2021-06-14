@@ -120,3 +120,56 @@ jack.calcAge();
 jack.getFirstName();
 
 console.log(jack.__proto__ === PersonCl.prototype);
+
+// ------ GETTERS AND SETTERS ------
+
+// Object literal example
+const account = {
+  owner: 'john',
+  movements: [300, 200, 340, 550],
+  get latest() {
+    return this.movements.slice(-1).pop();
+  },
+  set latest(mov) {
+    this.movements.push(mov);
+  },
+};
+
+console.log(account.latest);
+account.latest = 100;
+console.log(account.latest);
+
+// Class example
+class PersonCl1 {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  // Methods are added to .prototype property
+  calcAge() {
+    console.log(2021 - this.birthYear);
+  }
+
+  getFullName() {
+    console.log(`${this.fullName}`);
+  }
+
+  get age() {
+    return 2021 - this.birthYear;
+  }
+
+  // Setting a property that already exists
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+}
+
+const person1 = new PersonCl1('john doe', 1992);
+console.log(person1.age);
+console.log(person1.fullName);
