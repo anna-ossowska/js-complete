@@ -1,5 +1,5 @@
 'use strict';
-
+/*
 // ------ CONSTRUCTOR FUNCTION AND THE NEW OPERATOR ------
 
 // 1. new {} is created
@@ -180,14 +180,14 @@ console.log(person1.age);
 console.log(person1.fullName);
 
 // ------ STATIC METHODS ------
-/*
-PersonCl1.greet = function () {
-  console.log(this);
-  console.log('Hi there');
-};
 
-PersonCl1.greet();
-*/
+// PersonCl1.greet = function () {
+//   console.log(this);
+//   console.log('Hi there');
+// };
+
+// PersonCl1.greet();
+
 
 // We get an error, since greet() method is not inside the prototype of john object
 // there is no way john object can iherit this method
@@ -217,3 +217,42 @@ console.log(steven.__proto__ === PersonProto); // true
 const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1992);
 console.log(sarah);
+*/
+
+// ------ INHERITANCE BETWEEN 'CLASSES': CONSTRUCTOR FUNCTIONS ------
+const Person = function (firstName, birthYear) {
+  this.firstName = firstName;
+  this.birthYear = birthYear;
+};
+
+Person.prototype.calcAge = function () {
+  console.log(2021 - this.birthYear);
+};
+
+const Student = function (firstName, birthYear, course) {
+  Person.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+// Linking prototypes
+// at this point Student.prototype is an empty object
+Student.prototype = Object.create(Person.prototype);
+
+// we add methods onto this empty object
+Student.prototype.introduce = function () {
+  console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const mike = new Student('Mike', 1999, 'Computer Science');
+mike.introduce();
+mike.calcAge();
+
+console.log(mike.__proto__);
+console.log(mike.__proto__.__proto__);
+
+console.log(mike instanceof Student);
+console.log(mike instanceof Person);
+console.log(mike instanceof Object);
+
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
