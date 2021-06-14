@@ -217,7 +217,7 @@ console.log(steven.__proto__ === PersonProto); // true
 const sarah = Object.create(PersonProto);
 sarah.init('Sarah', 1992);
 console.log(sarah);
-*/
+
 
 // ------ INHERITANCE BETWEEN 'CLASSES': CONSTRUCTOR FUNCTIONS ------
 const Person = function (firstName, birthYear) {
@@ -257,14 +257,14 @@ console.log(mike instanceof Object);
 Student.prototype.constructor = Student;
 console.dir(Student.prototype.constructor);
 
-/* 
-1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
-2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
-3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
-4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism
 
-DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
-*/
+// 1. Use a constructor function to implement an Electric Car (called EV) as a CHILD "class" of Car. Besides a make and current speed, the EV also has the current battery charge in % ('charge' property);
+// 2. Implement a 'chargeBattery' method which takes an argument 'chargeTo' and sets the battery charge to 'chargeTo';
+// 3. Implement an 'accelerate' method that will increase the car's speed by 20, and decrease the charge by 1%. Then log a message like this: 'Tesla going at 140 km/h, with a charge of 22%';
+// 4. Create an electric car object and experiment with calling 'accelerate', 'brake' and 'chargeBattery' (charge to 90%). Notice what happens when you 'accelerate'! HINT: Review the definiton of polymorphism
+
+// DATA CAR 1: 'Tesla' going at 120 km/h, with a charge of 23%
+
 
 const Car = function (make, speed) {
   this.make = make;
@@ -307,3 +307,56 @@ tesla.accelerate();
 tesla.chargeBattery(90);
 tesla.brake();
 tesla.accelerate();
+*/
+
+// ------ INHERITANCE BETWEEN 'CLASSES': ES6 CLASSES ------
+class Person {
+  constructor(fullName, birthYear) {
+    this.fullName = fullName;
+    this.birthYear = birthYear;
+  }
+
+  calcAge() {
+    console.log(2021 - this.birthYear);
+  }
+
+  getFullName() {
+    console.log(`${this.fullName}`);
+  }
+
+  get age() {
+    return 2021 - this.birthYear;
+  }
+
+  set fullName(name) {
+    if (name.includes(' ')) this._fullName = name;
+    else alert(`${name} is not a full name`);
+  }
+
+  get fullName() {
+    return this._fullName;
+  }
+
+  static greet() {
+    console.log('Hi there');
+  }
+}
+
+// extends keyword links the prototypes
+class Student extends Person {
+  constructor(fullName, birthYear, course) {
+    // super is a constructor function of the parent class
+    // call to super function needs to happen first
+    super(fullName, birthYear);
+    this.course = course;
+  }
+
+  calcAge() {
+    console.log(2040 - this.birthYear);
+  }
+}
+
+const martha = new Student('Martha Jones', 1998, 'Computer Science');
+
+console.log(martha);
+martha.calcAge();
