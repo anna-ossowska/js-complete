@@ -139,7 +139,6 @@ console.log(account.latest);
 account.latest = 100;
 console.log(account.latest);
 
-// Class example
 class PersonCl1 {
   constructor(fullName, birthYear) {
     this.fullName = fullName;
@@ -147,6 +146,7 @@ class PersonCl1 {
   }
 
   // Methods are added to .prototype property
+  // Instance methods
   calcAge() {
     console.log(2021 - this.birthYear);
   }
@@ -168,8 +168,27 @@ class PersonCl1 {
   get fullName() {
     return this._fullName;
   }
+
+  // static methods
+  static greet() {
+    console.log('Hi there');
+  }
 }
 
 const person1 = new PersonCl1('john doe', 1992);
 console.log(person1.age);
 console.log(person1.fullName);
+
+// ------ STATIC METHODS ------
+/*
+PersonCl1.greet = function () {
+  console.log(this);
+  console.log('Hi there');
+};
+
+PersonCl1.greet();
+*/
+
+// We get an error, since greet() method is not inside the prototype of john object
+// there is no way john object can iherit this method
+// john.greet();
