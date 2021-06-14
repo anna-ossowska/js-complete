@@ -192,3 +192,28 @@ PersonCl1.greet();
 // We get an error, since greet() method is not inside the prototype of john object
 // there is no way john object can iherit this method
 // john.greet();
+
+// ------ OBJECT.CREATE ------
+
+// this is going to be a prototype of all person objects
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const steven = Object.create(PersonProto); // steven is now an empty object
+console.log(steven);
+steven.calcAge();
+
+console.log(steven.__proto__);
+console.log(steven.__proto__ === PersonProto); // true
+
+const sarah = Object.create(PersonProto);
+sarah.init('Sarah', 1992);
+console.log(sarah);
