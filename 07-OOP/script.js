@@ -309,6 +309,7 @@ tesla.brake();
 tesla.accelerate();
 */
 
+/*
 // ------ INHERITANCE BETWEEN 'CLASSES': ES6 CLASSES ------
 class Person {
   constructor(fullName, birthYear) {
@@ -360,3 +361,33 @@ const martha = new Student('Martha Jones', 1998, 'Computer Science');
 
 console.log(martha);
 martha.calcAge();
+*/
+
+// ------ INHERITANCE BETWEEN 'CLASSES': OBJECT.CREATE ------
+
+const PersonProto = {
+  calcAge() {
+    console.log(2037 - this.birthYear);
+  },
+
+  init(firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+  },
+};
+
+const StudentProto = Object.create(PersonProto);
+
+// reusing the init method from parent prototype
+StudentProto.init = function (firstName, birthYear, course) {
+  PersonProto.init.call(this, firstName, birthYear);
+  this.course = course;
+};
+
+StudentProto.greet = function () {
+  console.log('Hi there');
+};
+
+const john = Object.create(StudentProto);
+john.init('John', 1997, 'Computer Science');
+john.calcAge();
