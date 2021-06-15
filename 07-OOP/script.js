@@ -393,6 +393,8 @@ const john = Object.create(StudentProto);
 john.init('John', 1997, 'Computer Science');
 john.calcAge();
 */
+/*
+// ------ ENCAPSULATION: PROTECTED PROPERTIES AND METHODS ------
 
 class Account {
   constructor(owner, currency, pin) {
@@ -406,11 +408,11 @@ class Account {
     console.log(`Thanks for opening an account, ${owner}`);
   }
 
+  // Public interface
   getMovements() {
     return this._movements;
   }
 
-  // Public interface
   deposit(value) {
     this._movements.push(value);
   }
@@ -424,7 +426,7 @@ class Account {
   }
 
   requestLoan(value) {
-    if (this.approveLoan(value)) {
+    if (this._approveLoan(value)) {
       this.deposit(value);
       console.log('Loan approved');
     }
@@ -439,3 +441,70 @@ acc1.withdraw(10);
 acc1.movements;
 acc1.requestLoan(10);
 console.log(acc1.getMovements());
+*/
+
+// ------ ENCAPSULATION: PRIVATE CLASS FIELDS AND METHODS ------
+
+// 1. Public fields
+// 2. Private fields
+// 3. Public methods
+// 4. Private methods
+
+class Account {
+  // 1. Public fields
+  // they will be present on all the instances that we are creating through the class
+  // they do not exist on the prototype
+  locale = navigator.language;
+
+  // 2. Private fields
+  // not accessible from the oustide
+  #movements = [];
+  #pin; // just like creating an empty variable
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this.#pin = pin;
+    // this._movements = [];
+    // this.locale = navigator.language;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  // 3. Public methods
+  getMovements() {
+    return this.#movements;
+  }
+
+  deposit(value) {
+    this.#movements.push(value);
+  }
+
+  withdraw(value) {
+    this.deposit(-value);
+  }
+
+  // 4. private methods
+  // Syntax not supported by the browser yet:
+  // #approveLoan(value)
+  _approveLoan(value) {
+    return true;
+  }
+
+  requestLoan(value) {
+    if (this._approveLoan(value)) {
+      this.deposit(value);
+      console.log('Loan approved');
+    }
+  }
+}
+
+const acc1 = new Account('John', 'EUR', 1111);
+console.log(acc1);
+
+acc1.deposit(50);
+acc1.withdraw(10);
+acc1.requestLoan(10);
+console.log(acc1.getMovements());
+
+// private class fields cannot be read
+// console.log(acc1.#movements);
+// console.log(acc1.#pin);
