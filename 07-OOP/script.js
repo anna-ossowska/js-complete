@@ -476,10 +476,13 @@ class Account {
 
   deposit(value) {
     this.#movements.push(value);
+    // returning 'this' makes the metohd chainable
+    return this;
   }
 
   withdraw(value) {
     this.deposit(-value);
+    return this;
   }
 
   // 4. private methods
@@ -493,6 +496,7 @@ class Account {
     if (this._approveLoan(value)) {
       this.deposit(value);
       console.log('Loan approved');
+      return this;
     }
   }
 }
@@ -508,3 +512,8 @@ console.log(acc1.getMovements());
 // private class fields cannot be read
 // console.log(acc1.#movements);
 // console.log(acc1.#pin);
+
+// ------ CHAINING METHODS ------
+
+acc1.deposit(300).deposit(200).withdraw(150).requestLoan(1000).withdraw(2000);
+console.log(acc1.getMovements());
