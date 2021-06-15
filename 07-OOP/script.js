@@ -365,6 +365,7 @@ martha.calcAge();
 
 // ------ INHERITANCE BETWEEN 'CLASSES': OBJECT.CREATE ------
 
+/*
 const PersonProto = {
   calcAge() {
     console.log(2037 - this.birthYear);
@@ -391,3 +392,50 @@ StudentProto.greet = function () {
 const john = Object.create(StudentProto);
 john.init('John', 1997, 'Computer Science');
 john.calcAge();
+*/
+
+class Account {
+  constructor(owner, currency, pin) {
+    this.owner = owner;
+    this.currency = currency;
+    this._pin = pin;
+    // protected property
+    // it should not be touched outside of the class
+    this._movements = [];
+    this.locale = navigator.language;
+    console.log(`Thanks for opening an account, ${owner}`);
+  }
+
+  getMovements() {
+    return this._movements;
+  }
+
+  // Public interface
+  deposit(value) {
+    this._movements.push(value);
+  }
+
+  withdraw(value) {
+    this.deposit(-value);
+  }
+
+  _approveLoan(value) {
+    return true;
+  }
+
+  requestLoan(value) {
+    if (this.approveLoan(value)) {
+      this.deposit(value);
+      console.log('Loan approved');
+    }
+  }
+}
+
+const acc1 = new Account('John', 'EUR', 1111);
+console.log(acc1);
+
+acc1.deposit(50);
+acc1.withdraw(10);
+acc1.movements;
+acc1.requestLoan(10);
+console.log(acc1.getMovements());
