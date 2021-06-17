@@ -11,6 +11,51 @@ const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
 
+class Workout {
+  date = new Date();
+  id = (Date.now() + '').slice(-10);
+  constructor(coords, distance, duration) {
+    this.coords = coords; // [lat, lng]
+    this.distance = distance; // in km
+    this.duration = duration; // in min
+  }
+}
+
+class Running extends Workout {
+  constructor(coords, distance, duration, cadence) {
+    // initialising the 'this' keyword
+    super(coords, distance, duration);
+    this.cadence = cadence;
+    this.calcPace();
+  }
+
+  calcPace() {
+    // min/km
+    this.pace = this.distance / this.duration;
+    return this.pace;
+  }
+}
+
+class Cycling extends Workout {
+  constructor(coords, distance, duration, elevationGain) {
+    super(coords, distance, duration);
+    this.elevationGain = elevationGain;
+    this.calcSpeed();
+  }
+
+  calcSpeed() {
+    // km/h
+    this.speed = this.distance / this.duration;
+    return this.speed;
+  }
+}
+
+// const run1 = new Running([60, 4], 3, 20, 178);
+// const cycling1 = new Cycling([60, 4], 4, 10, 200);
+// console.log(run1, cycling1);
+
+/////////////////////////////
+// APPLICATION ARCHITECTURE
 class App {
   // private instance properties
   #map;
@@ -46,6 +91,7 @@ class App {
     // console.log(latitude, longitude);
     console.log(`https://www.google.com/maps/@${latitude},${longitude}}`);
     const coords = [latitude, longitude];
+    console.log(coords);
 
     // #map as a property
     console.log(this);
@@ -101,3 +147,4 @@ class App {
 }
 
 const app = new App();
+// const x = (new Date() + '').slice(-10);
