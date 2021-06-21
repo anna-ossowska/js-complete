@@ -271,7 +271,7 @@ const getCountryData = function (country) {
       // Country 2
       return getJSON(
         `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
-        '`Neighbour not found'
+        'Neighbour not found'
       );
     })
     .then(data => renderCountry(data, 'neighbour'))
