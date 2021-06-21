@@ -288,3 +288,24 @@ btn.addEventListener('click', function () {
   getCountryData('Norway');
   getCountryData('Australia');
 });
+
+///////////////////////////////////////
+// Event loop in practice
+
+console.log('Test start');
+
+setTimeout(() => console.log(' 0 sec timer'), 0);
+
+Promise.resolve('Resolved promise 1').then(res => console.log(res));
+
+Promise.resolve('Resolved promise 2').then(res => {
+  for (let i = 0; i < 1000000000; i++) {}
+  console.log(res);
+});
+
+console.log('Test end');
+
+// Test start             -> synchronous code returned first
+// Test end               -> synchronous code returned first
+// Resolved promise 1     -> callbacks comming from Microtasks Queue have the priority over the callbacks from the Callback Queue
+// 0 sec timer            -> returned after some time
