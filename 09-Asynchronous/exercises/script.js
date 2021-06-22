@@ -19,6 +19,7 @@ PART 2
 7. Render the country and catch any errors.
 */
 
+/*
 const btn = document.querySelector('.btn-country');
 const countriesContainer = document.querySelector('.countries');
 
@@ -45,6 +46,8 @@ const renderCountry = function (data, className = '') {
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
 };
+
+*/
 /*
 const whereAmI = function (lat, lng) {
   const url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`;
@@ -76,6 +79,8 @@ const whereAmI = function (lat, lng) {
     .finally(() => (countriesContainer.style.opacity = 1));
 };
 */
+
+/*
 const getResponse = function (url, msg) {
   return fetch(url).then(response => {
     if (!response.ok) throw new Error(msg);
@@ -117,3 +122,74 @@ const whereAmI = function (lat, lng) {
 
 whereAmI(-33.758011, 150.705444);
 // whereAmI(52.508, 13.381);
+*/
+
+///////////////////////////////////////
+// Coding Challenge #2
+
+/* 
+Build the image loading functionality that I just showed you on the screen.
+
+PART 1
+1. Create a function 'createImage' which receives imgPath as an input. This function returns a promise which creates a new image (use document.createElement('img')) and sets the .src attribute to the provided image path. When the image is done loading, append it to the DOM element with the 'images' class, and resolve the promise. The fulfilled value should be the image element itself. In case there is an error loading the image ('error' event), reject the promise.
+
+PART 2
+2. Comsume the promise using .then and also add an error handler;
+3. After the image has loaded, pause execution for 2 seconds using the wait function we created earlier;
+4. After the 2 seconds have passed, hide the current image (set display to 'none'), and load a second image (HINT: Use the image element returned by the createImage promise to hide the current image. You will need a global variable for that);
+5. After the second image has loaded, pause execution for 2 seconds again;
+6. After the 2 seconds have passed, hide the current image.
+
+TEST DATA: Images in the img folder. Test the error handler by passing a wrong image path. Set the network speed to 'Fast 3G' in the dev tools Network tab, otherwise images load too fast.
+*/
+
+const btn = document.querySelector('.btn-country');
+const countriesContainer = document.querySelector('.countries');
+const imagesContainer = document.querySelector('.images');
+let currentImage;
+
+const createImage = function (imgPath) {
+  return new Promise(function (resolve, reject) {
+    const img = document.createElement('img');
+    img.src = imgPath;
+
+    img.addEventListener('load', function () {
+      imagesContainer.insertAdjacentElement('beforeend', img);
+      // img received as a resolved value
+      resolve(img);
+    });
+
+    img.addEventListener('error', function () {
+      reject(new Error('Image not found'));
+    });
+  });
+};
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, 1000 * seconds);
+  });
+};
+
+createImage('./img/img-1.jpg')
+  .then(img => {
+    currentImage = img;
+    console.log(currentImage);
+    return wait(2);
+  })
+  .then(() => {
+    console.log('2 seconds passed');
+    currentImage.style.display = 'none';
+    return createImage('./img/img-2.jpg');
+  })
+  .then(img => {
+    currentImage = img;
+    return wait(2);
+  })
+  .then(() => {
+    console.log('2 seconds passed');
+    currentImage.style.display = 'none';
+    return createImage('./img/img-3.jpg');
+  })
+  .catch(err => console.error(err.message));
