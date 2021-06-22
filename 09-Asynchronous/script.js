@@ -292,6 +292,7 @@ btn.addEventListener('click', function () {
 ///////////////////////////////////////
 // Event loop in practice
 
+/*
 console.log('Test start');
 
 setTimeout(() => console.log(' 0 sec timer'), 0);
@@ -304,8 +305,69 @@ Promise.resolve('Resolved promise 2').then(res => {
 });
 
 console.log('Test end');
+*/
 
 // Test start             -> synchronous code returned first
 // Test end               -> synchronous code returned first
 // Resolved promise 1     -> callbacks comming from Microtasks Queue have the priority over the callbacks from the Callback Queue
 // 0 sec timer            -> returned after some time
+
+///////////////////////////////////////
+// Building a Promise
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You win');
+    } else {
+      reject(new Error('You loose'));
+    }
+  }, 2000);
+});
+
+// prettier-ignore
+lotteryPromise
+  .then(res => console.log(res))
+  .catch(err => console.error(err));
+
+// Promisifying setTimeout
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+// Old way:
+// setTimeout(() => {
+//   console.log('1 second passed');
+//   setTimeout(() => {
+//     console.log('2 seconds passed');
+//     setTimeout(() => {
+//       console.log('3 seconds passed');
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+
+wait(2)
+  .then(() => {
+    console.log('I waited for 2s');
+    return wait(1);
+  })
+  .then(() => console.log('I waited for 1s'));
+
+wait(1)
+  .then(() => {
+    console.log('1 second passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('2 seconds passed');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('3 seconds passed');
+    return wait(1);
+  });
+
+// Resolving immediately
+Promise.resolve('xxx').then(x => console.log('x'));
