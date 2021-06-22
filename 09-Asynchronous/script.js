@@ -284,10 +284,10 @@ const getCountryData = function (country) {
     });
 };
 
-btn.addEventListener('click', function () {
-  getCountryData('Norway');
-  getCountryData('Australia');
-});
+// btn.addEventListener('click', function () {
+//   getCountryData('Norway');
+//   getCountryData('Australia');
+// });
 
 ///////////////////////////////////////
 // Event loop in practice
@@ -315,6 +315,7 @@ console.log('Test end');
 ///////////////////////////////////////
 // Building a Promise
 
+/*
 const lotteryPromise = new Promise(function (resolve, reject) {
   setTimeout(function () {
     if (Math.random() >= 0.5) {
@@ -371,3 +372,63 @@ wait(1)
 
 // Resolving immediately
 Promise.resolve('xxx').then(x => console.log('x'));
+*/
+
+///////////////////////////////////////
+// Promisifying the Geolocation API
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   position => resolve(position),
+    //   err => reject(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+// getPosition().then(pos => console.log(pos));
+
+const getResponse = function (url, msg) {
+  return fetch(url).then(response => {
+    if (!response.ok) throw new Error(msg);
+    return response.json();
+  });
+};
+
+const whereAmI = function () {
+  getPosition()
+    .then(pos => {
+      const { latitude: lat, longitude: lng } = pos.coords;
+      return getResponse(
+        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`,
+        'Coordinates not found'
+      );
+    })
+    .then(data => {
+      console.log(`You are in ${data.city}, ${data.countryName}`);
+      const country = data.countryName;
+      return getResponse(
+        `https://restcountries.eu/rest/v2/name/${country}`,
+        'Country not found'
+      );
+    })
+    .then(data => {
+      const [countryData] = data;
+      renderCountry(countryData);
+
+      const neighbour = countryData.borders[0];
+      if (!neighbour) throw new Error('Neighbour not found');
+      return getResponse(
+        `https://restcountries.eu/rest/v2/alpha/${neighbour}`,
+        'Neighbour not found'
+      );
+    })
+    .then(data => renderCountry(data, 'neighbour'))
+    .catch(err => {
+      console.error(err);
+    })
+    .finally(() => (countriesContainer.style.opacity = 1));
+};
+
+btn.addEventListener('click', whereAmI);
