@@ -25,7 +25,7 @@ const renderCountry = function (data, className = '') {
     `;
 
   countriesContainer.insertAdjacentHTML('beforeend', html);
-  // countriesContainer.style.opacity = 1;
+  countriesContainer.style.opacity = 1;
 };
 
 ///////////////////////////////////////
@@ -245,6 +245,7 @@ btn.addEventListener('click', function () {
 });
 */
 
+/*
 const getJSON = function (url, errMsg = 'Something went wrong') {
   return fetch(url).then(response => {
     if (!response.ok) {
@@ -283,6 +284,7 @@ const getCountryData = function (country) {
       countriesContainer.style.opacity = 1;
     });
 };
+*/
 
 // btn.addEventListener('click', function () {
 //   getCountryData('Norway');
@@ -377,6 +379,7 @@ Promise.resolve('xxx').then(x => console.log('x'));
 ///////////////////////////////////////
 // Promisifying the Geolocation API
 
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     // navigator.geolocation.getCurrentPosition(
@@ -432,3 +435,46 @@ const whereAmI = function () {
 };
 
 btn.addEventListener('click', whereAmI);
+*/
+
+///////////////////////////////////////
+// Consuming Promises with Async/Await
+
+// Exactly the same as:
+// fetch(`https://restcountries.eu/rest/v2/name/${country}`).then(res =>
+//   console.log(res)
+// );
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  // Geolocation
+  const position = await getPosition();
+  const { latitude: lat, longitude: lng } = position.coords;
+
+  // Reverse geocoding
+  const resGeo = await fetch(
+    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+  );
+
+  const dataGeo = await resGeo.json();
+
+  console.log(dataGeo);
+
+  // Country data
+  // we wait for the value of the Promise to be returned
+  const resCountry = await fetch(
+    `https://restcountries.eu/rest/v2/name/${dataGeo.countryName}`
+  );
+
+  const data = await resCountry.json();
+
+  renderCountry(data[0]);
+};
+
+whereAmI();
+console.log('Should be printed first');
