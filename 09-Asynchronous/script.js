@@ -445,6 +445,7 @@ btn.addEventListener('click', whereAmI);
 //   console.log(res)
 // );
 
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -478,3 +479,58 @@ const whereAmI = async function () {
 
 whereAmI();
 console.log('Should be printed first');
+*/
+
+///////////////////////////////////////
+// Error handing with Async/Await (try...catch)
+
+// Simplified example
+// try {
+//   let y = 1;
+//   const x = 2;
+//   x = 3;
+//   // Catch has an access to whatever error occuredi n the try block
+// } catch (err) {
+//   console.log(err.message);
+// }
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  try {
+    // Geolocation
+    const position = await getPosition();
+    const { latitude: lat, longitude: lng } = position.coords;
+
+    // Reverse geocoding
+    // // Promise comming from fetch is automatically rejected only if user has no Internet connection
+    // //  We must throw an error for other scenarios manually
+    const resGeo = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+    );
+
+    if (!resGeo.ok) throw new Error('Geolocation data not found');
+    const dataGeo = await resGeo.json();
+
+    // Country data
+    const resCountry = await fetch(
+      `https://restcountries.eu/rest/v2/name/${dataGeo.countryName}`
+    );
+
+    if (!resGeo.ok) throw new Error('Country not found');
+    const data = await resCountry.json();
+
+    renderCountry(data[0]);
+  } catch (err) {
+    console.log(`${err.message}`);
+    console.log(err.type);
+  }
+};
+
+btn.addEventListener('click', function () {
+  whereAmI();
+});
