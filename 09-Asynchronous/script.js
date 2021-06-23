@@ -494,6 +494,7 @@ console.log('Should be printed first');
 //   console.log(err.message);
 // }
 
+/*
 const getPosition = function () {
   return new Promise(function (resolve, reject) {
     navigator.geolocation.getCurrentPosition(resolve, reject);
@@ -530,7 +531,66 @@ const whereAmI = async function () {
     console.log(err.type);
   }
 };
+*/
 
-btn.addEventListener('click', function () {
-  whereAmI();
-});
+///////////////////////////////////////
+// Returning values from async functions
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  try {
+    // Geolocation
+    const position = await getPosition();
+    const { latitude: lat, longitude: lng } = position.coords;
+
+    // Reverse geocoding
+    const resGeo = await fetch(
+      `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=en`
+    );
+
+    if (!resGeo.ok) throw new Error('Geolocation data not found');
+    const dataGeo = await resGeo.json();
+
+    // Country data
+    const resCountry = await fetch(
+      `https://restcountries.eu/rest/v2/name/${dataGeo.countryName}`
+    );
+
+    if (!resGeo.ok) throw new Error('Country not found');
+    const data = await resCountry.json();
+
+    renderCountry(data[0]);
+
+    return `You are in ${dataGeo.locality}, ${dataGeo.countryName}`;
+  } catch (err) {
+    console.log(`${err.message}`);
+    // To reject the promise returned from async function, rethrow an error inside catch block
+    throw err;
+  }
+};
+
+console.log('1. Will get location');
+
+// This function returns a Promise
+// If there is error inside function body defined above, that error will never reach catch block, because Promise is automatically filfilled, not rejected
+// whereAmI()
+//   .then(sentence => console.log(`2. ${sentence}`))
+//   .catch(err => console.error(`2. ${err.message}`))
+//   .finally(() => console.log('3. Finished getting location'));
+
+// Refactoring by using async/await
+(async function () {
+  try {
+    const sentence = await whereAmI();
+    console.log(sentence);
+  } catch (err) {
+    console.error(`2. ${err.message}`);
+  } finally {
+    console.log('3. Finished getting location');
+  }
+})();
