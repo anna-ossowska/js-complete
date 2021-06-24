@@ -610,6 +610,7 @@ const getJSON = function (url, errMsg = 'Something went wrong') {
   });
 };
 
+/*
 const getThreeCountries = async function (c1, c2, c3) {
   try {
     // Running non-dependent AJAX calls one after another
@@ -626,7 +627,7 @@ const getThreeCountries = async function (c1, c2, c3) {
     // console.log([data1.capital, data2.capital, data3.capital]);
 
     // Promise.all takes an array of not-depending on each other Promises and returns a single Promise
-    // (!) Promise.all shortcuts if one of the promises rejects
+    // (!) Promise.all shortcircuts if one of the promises rejects
     // because one rejected promise is enough for the entire thing to reject as well
     const data = await Promise.all([
       getJSON(`https://restcountries.eu/rest/v2/name/${c1}`),
@@ -641,3 +642,65 @@ const getThreeCountries = async function (c1, c2, c3) {
 };
 
 getThreeCountries('Norway', 'Denmark', 'Finland');
+*/
+
+///////////////////////////////////////
+// Other Promise Combinators: race, allSettled, any
+
+/////// Promise.race
+// The Promise returned by Promise.race is settled as soon as one of the input Promises settles
+// settles means that the value is available but it doesn't matter if a promise was rejected or fulfilled
+// the first settled promise wins the race
+
+// These three Promises race against each other
+// We get only once result
+// Promise.race shortcircuts if one of the Promises gets settled, no matter if fulfilled or rejected
+(async function () {
+  const res = await Promise.race([
+    getJSON(`https://restcountries.eu/rest/v2/name/italy`),
+    getJSON(`https://restcountries.eu/rest/v2/name/portugal`),
+    getJSON(`https://restcountries.eu/rest/v2/name/spain`),
+  ]);
+  console.log(res[0]);
+})();
+
+/////// Promise.race is very useful to prevent against never-ending promises or very long running promises
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(() => {
+      reject(new Error('Request took too long!'));
+    }, sec * 1000);
+  });
+};
+
+// 100 ms was not enough for the first request to finish
+// Thus, timeout wins the race
+Promise.race([
+  getJSON(`https://restcountries.eu/rest/v2/name/italy`),
+  timeout(0.1),
+])
+  .then(res => console.log(res[0]))
+  .catch(err => console.error(err));
+
+/////// Promise.allSettled
+// Returns an array of all settled promises, no matter if promise has rejected or not
+// It never shortcircuits
+Promise.allSettled([
+  Promise.resolve('Success'),
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Success'),
+]).then(res => console.log(res));
+
+/////// Promise.any [ES2021]
+// Returns the first fulfilled promise, ingoring any rejected promises
+Promise.any([
+  Promise.reject('Error'),
+  Promise.resolve('First fulfilled Promise is returned'),
+  Promise.resolve('Success'),
+  Promise.reject('Error'),
+  Promise.resolve('Success'),
+])
+  .then(res => console.log(res))
+  .catch(err => console.log(err));
