@@ -25,3 +25,9 @@ console.log('Importing module');
 import add from './shoppingCart.js';
 add('milk', 3);
 add('bread', 5);
+
+// Importing takeRight() from lodash
+import takeRight from './node_modules/lodash-es/takeRight.js';
+
+const randomNums = [2, 5, 6, 7];
+console.log(takeRight(randomNums, 2));
