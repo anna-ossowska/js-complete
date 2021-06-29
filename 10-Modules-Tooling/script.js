@@ -26,8 +26,15 @@ import add from './shoppingCart.js';
 add('milk', 3);
 add('bread', 5);
 
-// Importing takeRight() from lodash
-import takeRight from './node_modules/lodash-es/takeRight.js';
+// Importing takeRight() from lodash (without Parcel)
+// import takeRight from './node_modules/lodash-es/takeRight.js';
+
+// Importing takeRight() from lodash (with Parcel)
+import takeRight from 'lodash-es';
 
 const randomNums = [2, 5, 6, 7];
 console.log(takeRight(randomNums, 2));
+
+if (module.hot) {
+  module.hot.accept();
+}

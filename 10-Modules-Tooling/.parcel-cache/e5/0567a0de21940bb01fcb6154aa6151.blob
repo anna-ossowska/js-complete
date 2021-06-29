@@ -1,0 +1,1016 @@
+// modules are defined as an array
+// [ module function, map of requires ]
+//
+// map of requires is short require name -> numeric require
+//
+// anything defined in a previous bundle is accessed via the
+// orig method which is the require for previous bundles
+
+(function(modules, entry, mainEntry, parcelRequireName, globalName) {
+  /* eslint-disable no-undef */
+  var globalObject =
+    typeof globalThis !== 'undefined'
+      ? globalThis
+      : typeof self !== 'undefined'
+      ? self
+      : typeof window !== 'undefined'
+      ? window
+      : typeof global !== 'undefined'
+      ? global
+      : {};
+  /* eslint-enable no-undef */
+
+  // Save the require from previous bundle to this closure if any
+  var previousRequire =
+    typeof globalObject[parcelRequireName] === 'function' &&
+    globalObject[parcelRequireName];
+
+  var cache = previousRequire.cache || {};
+  // Do not use `require` to prevent Webpack from trying to bundle this call
+  var nodeRequire =
+    typeof module !== 'undefined' &&
+    typeof module.require === 'function' &&
+    module.require.bind(module);
+
+  function newRequire(name, jumped) {
+    if (!cache[name]) {
+      if (!modules[name]) {
+        // if we cannot find the module within our internal map or
+        // cache jump to the current global require ie. the last bundle
+        // that was added to the page.
+        var currentRequire =
+          typeof globalObject[parcelRequireName] === 'function' &&
+          globalObject[parcelRequireName];
+        if (!jumped && currentRequire) {
+          return currentRequire(name, true);
+        }
+
+        // If there are other bundles on this page the require from the
+        // previous one is saved to 'previousRequire'. Repeat this as
+        // many times as there are bundles until the module is found or
+        // we exhaust the require chain.
+        if (previousRequire) {
+          return previousRequire(name, true);
+        }
+
+        // Try the node require function if it exists.
+        if (nodeRequire && typeof name === 'string') {
+          return nodeRequire(name);
+        }
+
+        var err = new Error("Cannot find module '" + name + "'");
+        err.code = 'MODULE_NOT_FOUND';
+        throw err;
+      }
+
+      localRequire.resolve = resolve;
+      localRequire.cache = {};
+
+      var module = (cache[name] = new newRequire.Module(name));
+
+      modules[name][0].call(
+        module.exports,
+        localRequire,
+        module,
+        module.exports,
+        this
+      );
+    }
+
+    return cache[name].exports;
+
+    function localRequire(x) {
+      return newRequire(localRequire.resolve(x));
+    }
+
+    function resolve(x) {
+      return modules[name][1][x] || x;
+    }
+  }
+
+  function Module(moduleName) {
+    this.id = moduleName;
+    this.bundle = newRequire;
+    this.exports = {};
+  }
+
+  newRequire.isParcelRequire = true;
+  newRequire.Module = Module;
+  newRequire.modules = modules;
+  newRequire.cache = cache;
+  newRequire.parent = previousRequire;
+  newRequire.register = function(id, exports) {
+    modules[id] = [
+      function(require, module) {
+        module.exports = exports;
+      },
+      {},
+    ];
+  };
+
+  Object.defineProperty(newRequire, 'root', {
+    get: function() {
+      return globalObject[parcelRequireName];
+    },
+  });
+
+  globalObject[parcelRequireName] = newRequire;
+
+  for (var i = 0; i < entry.length; i++) {
+    newRequire(entry[i]);
+  }
+
+  if (mainEntry) {
+    // Expose entry point to Node, AMD or browser globals
+    // Based on https://github.com/ForbesLindesay/umd/blob/master/template.js
+    var mainExports = newRequire(mainEntry);
+
+    // CommonJS
+    if (typeof exports === 'object' && typeof module !== 'undefined') {
+      module.exports = mainExports;
+
+      // RequireJS
+    } else if (typeof define === 'function' && define.amd) {
+      define(function() {
+        return mainExports;
+      });
+
+      // <script>
+    } else if (globalName) {
+      this[globalName] = mainExports;
+    }
+  }
+})({"63iPG":[function(require,module,exports) {
+var HMR_HOST = null;
+var HMR_PORT = 1234;
+var HMR_SECURE = false;
+var HMR_ENV_HASH = "d751713988987e9331980363e24189ce";
+module.bundle.HMR_BUNDLE_ID = "d231a23f43d60e28ed500b93b4f5078c";
+// @flow
+/*global HMR_HOST, HMR_PORT, HMR_ENV_HASH, HMR_SECURE*/
+/*::
+import type {
+HMRAsset,
+HMRMessage,
+} from '@parcel/reporter-dev-server/src/HMRServer.js';
+interface ParcelRequire {
+(string): mixed;
+cache: {|[string]: ParcelModule|};
+hotData: mixed;
+Module: any;
+parent: ?ParcelRequire;
+isParcelRequire: true;
+modules: {|[string]: [Function, {|[string]: string|}]|};
+HMR_BUNDLE_ID: string;
+root: ParcelRequire;
+}
+interface ParcelModule {
+hot: {|
+data: mixed,
+accept(cb: (Function) => void): void,
+dispose(cb: (mixed) => void): void,
+// accept(deps: Array<string> | string, cb: (Function) => void): void,
+// decline(): void,
+_acceptCallbacks: Array<(Function) => void>,
+_disposeCallbacks: Array<(mixed) => void>,
+|};
+}
+declare var module: {bundle: ParcelRequire, ...};
+declare var HMR_HOST: string;
+declare var HMR_PORT: string;
+declare var HMR_ENV_HASH: string;
+declare var HMR_SECURE: boolean;
+*/
+var OVERLAY_ID = '__parcel__error__overlay__';
+var OldModule = module.bundle.Module;
+function Module(moduleName) {
+  OldModule.call(this, moduleName);
+  this.hot = {
+    data: module.bundle.hotData,
+    _acceptCallbacks: [],
+    _disposeCallbacks: [],
+    accept: function (fn) {
+      this._acceptCallbacks.push(fn || (function () {}));
+    },
+    dispose: function (fn) {
+      this._disposeCallbacks.push(fn);
+    }
+  };
+  module.bundle.hotData = undefined;
+}
+module.bundle.Module = Module;
+var checkedAssets, /*: {|[string]: boolean|}*/
+acceptedAssets, /*: {|[string]: boolean|}*/
+/*: {|[string]: boolean|}*/
+assetsToAccept;
+function getHostname() {
+  return HMR_HOST || (location.protocol.indexOf('http') === 0 ? location.hostname : 'localhost');
+}
+function getPort() {
+  return HMR_PORT || location.port;
+}
+// eslint-disable-next-line no-redeclare
+var parent = module.bundle.parent;
+if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
+  var hostname = getHostname();
+  var port = getPort();
+  var protocol = HMR_SECURE || location.protocol == 'https:' && !(/localhost|127.0.0.1|0.0.0.0/).test(hostname) ? 'wss' : 'ws';
+  var ws = new WebSocket(protocol + '://' + hostname + (port ? ':' + port : '') + '/');
+  // $FlowFixMe
+  ws.onmessage = function (event) /*: {data: string, ...}*/
+  {
+    checkedAssets = {
+      /*: {|[string]: boolean|}*/
+    };
+    acceptedAssets = {
+      /*: {|[string]: boolean|}*/
+    };
+    assetsToAccept = [];
+    var data = /*: HMRMessage*/
+    JSON.parse(event.data);
+    if (data.type === 'update') {
+      // Remove error overlay if there is one
+      removeErrorOverlay();
+      let assets = data.assets.filter(asset => asset.envHash === HMR_ENV_HASH);
+      // Handle HMR Update
+      var handled = false;
+      assets.forEach(asset => {
+        var didAccept = asset.type === 'css' || asset.type === 'js' && hmrAcceptCheck(module.bundle.root, asset.id, asset.depsByBundle);
+        if (didAccept) {
+          handled = true;
+        }
+      });
+      if (handled) {
+        console.clear();
+        assets.forEach(function (asset) {
+          hmrApply(module.bundle.root, asset);
+        });
+        for (var i = 0; i < assetsToAccept.length; i++) {
+          var id = assetsToAccept[i][1];
+          if (!acceptedAssets[id]) {
+            hmrAcceptRun(assetsToAccept[i][0], id);
+          }
+        }
+      } else {
+        window.location.reload();
+      }
+    }
+    if (data.type === 'error') {
+      // Log parcel errors to console
+      for (let ansiDiagnostic of data.diagnostics.ansi) {
+        let stack = ansiDiagnostic.codeframe ? ansiDiagnostic.codeframe : ansiDiagnostic.stack;
+        console.error('🚨 [parcel]: ' + ansiDiagnostic.message + '\n' + stack + '\n\n' + ansiDiagnostic.hints.join('\n'));
+      }
+      // Render the fancy html overlay
+      removeErrorOverlay();
+      var overlay = createErrorOverlay(data.diagnostics.html);
+      // $FlowFixMe
+      document.body.appendChild(overlay);
+    }
+  };
+  ws.onerror = function (e) {
+    console.error(e.message);
+  };
+  ws.onclose = function (e) {
+    if (undefined !== 'test') {
+      console.warn('[parcel] 🚨 Connection to the HMR server was lost');
+    }
+  };
+}
+function removeErrorOverlay() {
+  var overlay = document.getElementById(OVERLAY_ID);
+  if (overlay) {
+    overlay.remove();
+    console.log('[parcel] ✨ Error resolved');
+  }
+}
+function createErrorOverlay(diagnostics) {
+  var overlay = document.createElement('div');
+  overlay.id = OVERLAY_ID;
+  let errorHTML = '<div style="background: black; opacity: 0.85; font-size: 16px; color: white; position: fixed; height: 100%; width: 100%; top: 0px; left: 0px; padding: 30px; font-family: Menlo, Consolas, monospace; z-index: 9999;">';
+  for (let diagnostic of diagnostics) {
+    let stack = diagnostic.codeframe ? diagnostic.codeframe : diagnostic.stack;
+    errorHTML += `
+      <div>
+        <div style="font-size: 18px; font-weight: bold; margin-top: 20px;">
+          🚨 ${diagnostic.message}
+        </div>
+        <pre>
+          ${stack}
+        </pre>
+        <div>
+          ${diagnostic.hints.map(hint => '<div>' + hint + '</div>').join('')}
+        </div>
+      </div>
+    `;
+  }
+  errorHTML += '</div>';
+  overlay.innerHTML = errorHTML;
+  return overlay;
+}
+function getParents(bundle, id) /*: Array<[ParcelRequire, string]>*/
+{
+  var modules = bundle.modules;
+  if (!modules) {
+    return [];
+  }
+  var parents = [];
+  var k, d, dep;
+  for (k in modules) {
+    for (d in modules[k][1]) {
+      dep = modules[k][1][d];
+      if (dep === id || Array.isArray(dep) && dep[dep.length - 1] === id) {
+        parents.push([bundle, k]);
+      }
+    }
+  }
+  if (bundle.parent) {
+    parents = parents.concat(getParents(bundle.parent, id));
+  }
+  return parents;
+}
+function updateLink(link) {
+  var newLink = link.cloneNode();
+  newLink.onload = function () {
+    if (link.parentNode !== null) {
+      // $FlowFixMe
+      link.parentNode.removeChild(link);
+    }
+  };
+  newLink.setAttribute('href', // $FlowFixMe
+  link.getAttribute('href').split('?')[0] + '?' + Date.now());
+  // $FlowFixMe
+  link.parentNode.insertBefore(newLink, link.nextSibling);
+}
+var cssTimeout = null;
+function reloadCSS() {
+  if (cssTimeout) {
+    return;
+  }
+  cssTimeout = setTimeout(function () {
+    var links = document.querySelectorAll('link[rel="stylesheet"]');
+    for (var i = 0; i < links.length; i++) {
+      // $FlowFixMe[incompatible-type]
+      var href = /*: string*/
+      links[i].getAttribute('href');
+      var hostname = getHostname();
+      var servedFromHMRServer = hostname === 'localhost' ? new RegExp('^(https?:\\/\\/(0.0.0.0|127.0.0.1)|localhost):' + getPort()).test(href) : href.indexOf(hostname + ':' + getPort());
+      var absolute = (/^https?:\/\//i).test(href) && href.indexOf(window.location.origin) !== 0 && !servedFromHMRServer;
+      if (!absolute) {
+        updateLink(links[i]);
+      }
+    }
+    cssTimeout = null;
+  }, 50);
+}
+function hmrApply(bundle, /*: ParcelRequire*/
+asset) /*:  HMRAsset*/
+{
+  var modules = bundle.modules;
+  if (!modules) {
+    return;
+  }
+  if (asset.type === 'css') {
+    reloadCSS();
+    return;
+  }
+  let deps = asset.depsByBundle[bundle.HMR_BUNDLE_ID];
+  if (deps) {
+    var fn = new Function('require', 'module', 'exports', asset.output);
+    modules[asset.id] = [fn, deps];
+  } else if (bundle.parent) {
+    hmrApply(bundle.parent, asset);
+  }
+}
+function hmrAcceptCheck(bundle, /*: ParcelRequire*/
+id, /*: ParcelRequire*/
+/*: string*/
+depsByBundle) /*: ?{ [string]: { [string]: string } }*/
+{
+  var modules = bundle.modules;
+  if (!modules) {
+    return;
+  }
+  if (depsByBundle && !depsByBundle[bundle.HMR_BUNDLE_ID]) {
+    // If we reached the root bundle without finding where the asset should go,
+    // there's nothing to do. Mark as "accepted" so we don't reload the page.
+    if (!bundle.parent) {
+      return true;
+    }
+    return hmrAcceptCheck(bundle.parent, id, depsByBundle);
+  }
+  if (checkedAssets[id]) {
+    return;
+  }
+  checkedAssets[id] = true;
+  var cached = bundle.cache[id];
+  assetsToAccept.push([bundle, id]);
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    return true;
+  }
+  return getParents(module.bundle.root, id).some(function (v) {
+    return hmrAcceptCheck(v[0], v[1], null);
+  });
+}
+function hmrAcceptRun(bundle, /*: ParcelRequire*/
+id) /*: string*/
+{
+  var cached = bundle.cache[id];
+  bundle.hotData = {};
+  if (cached && cached.hot) {
+    cached.hot.data = bundle.hotData;
+  }
+  if (cached && cached.hot && cached.hot._disposeCallbacks.length) {
+    cached.hot._disposeCallbacks.forEach(function (cb) {
+      cb(bundle.hotData);
+    });
+  }
+  delete bundle.cache[id];
+  bundle(id);
+  cached = bundle.cache[id];
+  if (cached && cached.hot && cached.hot._acceptCallbacks.length) {
+    cached.hot._acceptCallbacks.forEach(function (cb) {
+      var assetsToAlsoAccept = cb(function () {
+        return getParents(module.bundle.root, id);
+      });
+      if (assetsToAlsoAccept && assetsToAccept.length) {
+        assetsToAccept.push.apply(assetsToAccept, assetsToAlsoAccept);
+      }
+    });
+  }
+  acceptedAssets[id] = true;
+}
+
+},{}],"4ThtM":[function(require,module,exports) {
+var _shoppingCartJs = require('./shoppingCart.js');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _shoppingCartJsDefault = _parcelHelpers.interopDefault(_shoppingCartJs);
+var _node_modulesLodashEsTakeRightJs = require('./node_modules/lodash-es/takeRight.js');
+var _node_modulesLodashEsTakeRightJsDefault = _parcelHelpers.interopDefault(_node_modulesLodashEsTakeRightJs);
+// Importing module
+// import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
+console.log('Importing module');
+_shoppingCartJsDefault.default('milk', 3);
+_shoppingCartJsDefault.default('bread', 5);
+const randomNums = [2, 5, 6, 7];
+console.log(_node_modulesLodashEsTakeRightJsDefault.default(randomNums, 2));
+if (module.hot) {
+  module.hot.accept();
+}
+
+},{"./shoppingCart.js":"61EPh","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y","./node_modules/lodash-es/takeRight.js":"4wRPv"}],"61EPh":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+_parcelHelpers.export(exports, "cart", function () {
+  return cart;
+});
+_parcelHelpers.export(exports, "addToCart", function () {
+  return addToCart;
+});
+_parcelHelpers.export(exports, "totalPrice", function () {
+  return totalPrice;
+});
+_parcelHelpers.export(exports, "tq", function () {
+  return totalQuantity;
+});
+// Exporting module
+console.log('Exporting module');
+// NAMED EXPORT
+const shippingCost = 10;
+const cart = [];
+const addToCart = function (product, quantity) {
+  cart.push(product, quantity);
+  console.log(`${quantity} ${product} has been added to the cart`);
+};
+// Will not work inside functions, if blocks, etc.
+// if (true) {
+// export const addToCart = function (product, quantity) {
+// cart.push(product, quantity);
+// console.log(`${quantity} ${product} has been added to the cart`);
+// };
+// }
+const totalPrice = 235;
+const totalQuantity = 23;
+exports.default = function (product, quantity) {
+  cart.push(product, quantity);
+  console.log(`${quantity} ${product} has been added to the cart`);
+};
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5gA8y":[function(require,module,exports) {
+"use strict";
+
+exports.interopDefault = function (a) {
+  return a && a.__esModule ? a : {
+    default: a
+  };
+};
+
+exports.defineInteropFlag = function (a) {
+  Object.defineProperty(a, '__esModule', {
+    value: true
+  });
+};
+
+exports.exportAll = function (source, dest) {
+  Object.keys(source).forEach(function (key) {
+    if (key === 'default' || key === '__esModule') {
+      return;
+    } // Skip duplicate re-exports when they have the same value.
+
+
+    if (key in dest && dest[key] === source[key]) {
+      return;
+    }
+
+    Object.defineProperty(dest, key, {
+      enumerable: true,
+      get: function () {
+        return source[key];
+      }
+    });
+  });
+  return dest;
+};
+
+exports.export = function (dest, destName, get) {
+  Object.defineProperty(dest, destName, {
+    enumerable: true,
+    get: get
+  });
+};
+},{}],"4wRPv":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _baseSliceJs = require('./_baseSlice.js');
+var _baseSliceJsDefault = _parcelHelpers.interopDefault(_baseSliceJs);
+var _toIntegerJs = require('./toInteger.js');
+var _toIntegerJsDefault = _parcelHelpers.interopDefault(_toIntegerJs);
+/**
+* Creates a slice of `array` with `n` elements taken from the end.
+*
+* @static
+* @memberOf _
+* @since 3.0.0
+* @category Array
+* @param {Array} array The array to query.
+* @param {number} [n=1] The number of elements to take.
+* @param- {Object} [guard] Enables use as an iteratee for methods like `_.map`.
+* @returns {Array} Returns the slice of `array`.
+* @example
+*
+* _.takeRight([1, 2, 3]);
+* // => [3]
+*
+* _.takeRight([1, 2, 3], 2);
+* // => [2, 3]
+*
+* _.takeRight([1, 2, 3], 5);
+* // => [1, 2, 3]
+*
+* _.takeRight([1, 2, 3], 0);
+* // => []
+*/
+function takeRight(array, n, guard) {
+  var length = array == null ? 0 : array.length;
+  if (!length) {
+    return [];
+  }
+  n = guard || n === undefined ? 1 : _toIntegerJsDefault.default(n);
+  n = length - n;
+  return _baseSliceJsDefault.default(array, n < 0 ? 0 : n, length);
+}
+exports.default = takeRight;
+
+},{"./_baseSlice.js":"4D3oL","./toInteger.js":"5uogO","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4D3oL":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+/**
+* The base implementation of `_.slice` without an iteratee call guard.
+*
+* @private
+* @param {Array} array The array to slice.
+* @param {number} [start=0] The start position.
+* @param {number} [end=array.length] The end position.
+* @returns {Array} Returns the slice of `array`.
+*/
+function baseSlice(array, start, end) {
+  var index = -1, length = array.length;
+  if (start < 0) {
+    start = -start > length ? 0 : length + start;
+  }
+  end = end > length ? length : end;
+  if (end < 0) {
+    end += length;
+  }
+  length = start > end ? 0 : end - start >>> 0;
+  start >>>= 0;
+  var result = Array(length);
+  while (++index < length) {
+    result[index] = array[index + start];
+  }
+  return result;
+}
+exports.default = baseSlice;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5uogO":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _toFiniteJs = require('./toFinite.js');
+var _toFiniteJsDefault = _parcelHelpers.interopDefault(_toFiniteJs);
+/**
+* Converts `value` to an integer.
+*
+* **Note:** This method is loosely based on
+* [`ToInteger`](http://www.ecma-international.org/ecma-262/7.0/#sec-tointeger).
+*
+* @static
+* @memberOf _
+* @since 4.0.0
+* @category Lang
+* @param {*} value The value to convert.
+* @returns {number} Returns the converted integer.
+* @example
+*
+* _.toInteger(3.2);
+* // => 3
+*
+* _.toInteger(Number.MIN_VALUE);
+* // => 0
+*
+* _.toInteger(Infinity);
+* // => 1.7976931348623157e+308
+*
+* _.toInteger('3.2');
+* // => 3
+*/
+function toInteger(value) {
+  var result = _toFiniteJsDefault.default(value), remainder = result % 1;
+  return result === result ? remainder ? result - remainder : result : 0;
+}
+exports.default = toInteger;
+
+},{"./toFinite.js":"3Qnm5","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3Qnm5":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _toNumberJs = require('./toNumber.js');
+var _toNumberJsDefault = _parcelHelpers.interopDefault(_toNumberJs);
+/** Used as references for various `Number` constants.*/
+var INFINITY = 1 / 0, MAX_INTEGER = 1.7976931348623157e+308;
+/**
+* Converts `value` to a finite number.
+*
+* @static
+* @memberOf _
+* @since 4.12.0
+* @category Lang
+* @param {*} value The value to convert.
+* @returns {number} Returns the converted number.
+* @example
+*
+* _.toFinite(3.2);
+* // => 3.2
+*
+* _.toFinite(Number.MIN_VALUE);
+* // => 5e-324
+*
+* _.toFinite(Infinity);
+* // => 1.7976931348623157e+308
+*
+* _.toFinite('3.2');
+* // => 3.2
+*/
+function toFinite(value) {
+  if (!value) {
+    return value === 0 ? value : 0;
+  }
+  value = _toNumberJsDefault.default(value);
+  if (value === INFINITY || value === -INFINITY) {
+    var sign = value < 0 ? -1 : 1;
+    return sign * MAX_INTEGER;
+  }
+  return value === value ? value : 0;
+}
+exports.default = toFinite;
+
+},{"./toNumber.js":"6QmFp","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6QmFp":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _baseTrimJs = require('./_baseTrim.js');
+var _baseTrimJsDefault = _parcelHelpers.interopDefault(_baseTrimJs);
+var _isObjectJs = require('./isObject.js');
+var _isObjectJsDefault = _parcelHelpers.interopDefault(_isObjectJs);
+var _isSymbolJs = require('./isSymbol.js');
+var _isSymbolJsDefault = _parcelHelpers.interopDefault(_isSymbolJs);
+/** Used as references for various `Number` constants.*/
+var NAN = 0 / 0;
+/** Used to detect bad signed hexadecimal string values.*/
+var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+/** Used to detect binary string values.*/
+var reIsBinary = /^0b[01]+$/i;
+/** Used to detect octal string values.*/
+var reIsOctal = /^0o[0-7]+$/i;
+/** Built-in method references without a dependency on `root`.*/
+var freeParseInt = parseInt;
+/**
+* Converts `value` to a number.
+*
+* @static
+* @memberOf _
+* @since 4.0.0
+* @category Lang
+* @param {*} value The value to process.
+* @returns {number} Returns the number.
+* @example
+*
+* _.toNumber(3.2);
+* // => 3.2
+*
+* _.toNumber(Number.MIN_VALUE);
+* // => 5e-324
+*
+* _.toNumber(Infinity);
+* // => Infinity
+*
+* _.toNumber('3.2');
+* // => 3.2
+*/
+function toNumber(value) {
+  if (typeof value == 'number') {
+    return value;
+  }
+  if (_isSymbolJsDefault.default(value)) {
+    return NAN;
+  }
+  if (_isObjectJsDefault.default(value)) {
+    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
+    value = _isObjectJsDefault.default(other) ? other + '' : other;
+  }
+  if (typeof value != 'string') {
+    return value === 0 ? value : +value;
+  }
+  value = _baseTrimJsDefault.default(value);
+  var isBinary = reIsBinary.test(value);
+  return isBinary || reIsOctal.test(value) ? freeParseInt(value.slice(2), isBinary ? 2 : 8) : reIsBadHex.test(value) ? NAN : +value;
+}
+exports.default = toNumber;
+
+},{"./_baseTrim.js":"6Esu9","./isObject.js":"dO907","./isSymbol.js":"3GNts","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"6Esu9":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _trimmedEndIndexJs = require('./_trimmedEndIndex.js');
+var _trimmedEndIndexJsDefault = _parcelHelpers.interopDefault(_trimmedEndIndexJs);
+/** Used to match leading whitespace.*/
+var reTrimStart = /^\s+/;
+/**
+* The base implementation of `_.trim`.
+*
+* @private
+* @param {string} string The string to trim.
+* @returns {string} Returns the trimmed string.
+*/
+function baseTrim(string) {
+  return string ? string.slice(0, _trimmedEndIndexJsDefault.default(string) + 1).replace(reTrimStart, '') : string;
+}
+exports.default = baseTrim;
+
+},{"./_trimmedEndIndex.js":"13UTr","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"13UTr":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+/** Used to match a single whitespace character.*/
+var reWhitespace = /\s/;
+/**
+* Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
+* character of `string`.
+*
+* @private
+* @param {string} string The string to inspect.
+* @returns {number} Returns the index of the last non-whitespace character.
+*/
+function trimmedEndIndex(string) {
+  var index = string.length;
+  while (index-- && reWhitespace.test(string.charAt(index))) {}
+  return index;
+}
+exports.default = trimmedEndIndex;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"dO907":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+/**
+* Checks if `value` is the
+* [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
+* of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+*
+* @static
+* @memberOf _
+* @since 0.1.0
+* @category Lang
+* @param {*} value The value to check.
+* @returns {boolean} Returns `true` if `value` is an object, else `false`.
+* @example
+*
+* _.isObject({});
+* // => true
+*
+* _.isObject([1, 2, 3]);
+* // => true
+*
+* _.isObject(_.noop);
+* // => true
+*
+* _.isObject(null);
+* // => false
+*/
+function isObject(value) {
+  var type = typeof value;
+  return value != null && (type == 'object' || type == 'function');
+}
+exports.default = isObject;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"3GNts":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _baseGetTagJs = require('./_baseGetTag.js');
+var _baseGetTagJsDefault = _parcelHelpers.interopDefault(_baseGetTagJs);
+var _isObjectLikeJs = require('./isObjectLike.js');
+var _isObjectLikeJsDefault = _parcelHelpers.interopDefault(_isObjectLikeJs);
+/** `Object#toString` result references.*/
+var symbolTag = '[object Symbol]';
+/**
+* Checks if `value` is classified as a `Symbol` primitive or object.
+*
+* @static
+* @memberOf _
+* @since 4.0.0
+* @category Lang
+* @param {*} value The value to check.
+* @returns {boolean} Returns `true` if `value` is a symbol, else `false`.
+* @example
+*
+* _.isSymbol(Symbol.iterator);
+* // => true
+*
+* _.isSymbol('abc');
+* // => false
+*/
+function isSymbol(value) {
+  return typeof value == 'symbol' || _isObjectLikeJsDefault.default(value) && _baseGetTagJsDefault.default(value) == symbolTag;
+}
+exports.default = isSymbol;
+
+},{"./_baseGetTag.js":"4qr41","./isObjectLike.js":"5bq98","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4qr41":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _SymbolJs = require('./_Symbol.js');
+var _SymbolJsDefault = _parcelHelpers.interopDefault(_SymbolJs);
+var _getRawTagJs = require('./_getRawTag.js');
+var _getRawTagJsDefault = _parcelHelpers.interopDefault(_getRawTagJs);
+var _objectToStringJs = require('./_objectToString.js');
+var _objectToStringJsDefault = _parcelHelpers.interopDefault(_objectToStringJs);
+/** `Object#toString` result references.*/
+var nullTag = '[object Null]', undefinedTag = '[object Undefined]';
+/** Built-in value references.*/
+var symToStringTag = _SymbolJsDefault.default ? _SymbolJsDefault.default.toStringTag : undefined;
+/**
+* The base implementation of `getTag` without fallbacks for buggy environments.
+*
+* @private
+* @param {*} value The value to query.
+* @returns {string} Returns the `toStringTag`.
+*/
+function baseGetTag(value) {
+  if (value == null) {
+    return value === undefined ? undefinedTag : nullTag;
+  }
+  return symToStringTag && (symToStringTag in Object(value)) ? _getRawTagJsDefault.default(value) : _objectToStringJsDefault.default(value);
+}
+exports.default = baseGetTag;
+
+},{"./_Symbol.js":"7fIUV","./_getRawTag.js":"2L053","./_objectToString.js":"4LsmF","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7fIUV":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _rootJs = require('./_root.js');
+var _rootJsDefault = _parcelHelpers.interopDefault(_rootJs);
+/** Built-in value references.*/
+var Symbol = _rootJsDefault.default.Symbol;
+exports.default = Symbol;
+
+},{"./_root.js":"5s7G3","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5s7G3":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _freeGlobalJs = require('./_freeGlobal.js');
+var _freeGlobalJsDefault = _parcelHelpers.interopDefault(_freeGlobalJs);
+/** Detect free variable `self`.*/
+var freeSelf = typeof self == 'object' && self && self.Object === Object && self;
+/** Used as a reference to the global object.*/
+var root = _freeGlobalJsDefault.default || freeSelf || Function('return this')();
+exports.default = root;
+
+},{"./_freeGlobal.js":"7bdaG","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"7bdaG":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var global = arguments[3];
+/** Detect free variable `global` from Node.js.*/
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+exports.default = freeGlobal;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"2L053":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+var _SymbolJs = require('./_Symbol.js');
+var _SymbolJsDefault = _parcelHelpers.interopDefault(_SymbolJs);
+/** Used for built-in method references.*/
+var objectProto = Object.prototype;
+/** Used to check objects for own properties.*/
+var hasOwnProperty = objectProto.hasOwnProperty;
+/**
+* Used to resolve the
+* [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+* of values.
+*/
+var nativeObjectToString = objectProto.toString;
+/** Built-in value references.*/
+var symToStringTag = _SymbolJsDefault.default ? _SymbolJsDefault.default.toStringTag : undefined;
+/**
+* A specialized version of `baseGetTag` which ignores `Symbol.toStringTag` values.
+*
+* @private
+* @param {*} value The value to query.
+* @returns {string} Returns the raw `toStringTag`.
+*/
+function getRawTag(value) {
+  var isOwn = hasOwnProperty.call(value, symToStringTag), tag = value[symToStringTag];
+  try {
+    value[symToStringTag] = undefined;
+    var unmasked = true;
+  } catch (e) {}
+  var result = nativeObjectToString.call(value);
+  if (unmasked) {
+    if (isOwn) {
+      value[symToStringTag] = tag;
+    } else {
+      delete value[symToStringTag];
+    }
+  }
+  return result;
+}
+exports.default = getRawTag;
+
+},{"./_Symbol.js":"7fIUV","@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"4LsmF":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+/** Used for built-in method references.*/
+var objectProto = Object.prototype;
+/**
+* Used to resolve the
+* [`toStringTag`](http://ecma-international.org/ecma-262/7.0/#sec-object.prototype.tostring)
+* of values.
+*/
+var nativeObjectToString = objectProto.toString;
+/**
+* Converts `value` to a string using `Object.prototype.toString`.
+*
+* @private
+* @param {*} value The value to convert.
+* @returns {string} Returns the converted string.
+*/
+function objectToString(value) {
+  return nativeObjectToString.call(value);
+}
+exports.default = objectToString;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}],"5bq98":[function(require,module,exports) {
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+_parcelHelpers.defineInteropFlag(exports);
+/**
+* Checks if `value` is object-like. A value is object-like if it's not `null`
+* and has a `typeof` result of "object".
+*
+* @static
+* @memberOf _
+* @since 4.0.0
+* @category Lang
+* @param {*} value The value to check.
+* @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+* @example
+*
+* _.isObjectLike({});
+* // => true
+*
+* _.isObjectLike([1, 2, 3]);
+* // => true
+*
+* _.isObjectLike(_.noop);
+* // => false
+*
+* _.isObjectLike(null);
+* // => false
+*/
+function isObjectLike(value) {
+  return value != null && typeof value == 'object';
+}
+exports.default = isObjectLike;
+
+},{"@parcel/transformer-js/lib/esmodule-helpers.js":"5gA8y"}]},["63iPG","4ThtM"], "4ThtM", "parcelRequirec644")
+
+//# sourceMappingURL=index.HASH_REF_d231a23f43d60e28ed500b93b4f5078c.js.map

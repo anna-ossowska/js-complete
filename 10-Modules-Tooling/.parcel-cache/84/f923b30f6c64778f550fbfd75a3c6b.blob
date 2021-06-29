@@ -1,0 +1,15 @@
+var _shoppingCartJs = require('./shoppingCart.js');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _shoppingCartJsDefault = _parcelHelpers.interopDefault(_shoppingCartJs);
+// Importing module
+// import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
+console.log('Importing module');
+_shoppingCartJsDefault.default('milk', 3);
+_shoppingCartJsDefault.default('bread', 5);
+// Importing takeRight() from lodash
+// import takeRight from './node_modules/lodash-es/takeRight.js';
+// const randomNums = [2, 5, 6, 7];
+// console.log(takeRight(randomNums, 2));
+if (module.hot) {
+  module.hot.accept();
+}

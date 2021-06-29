@@ -1,0 +1,8 @@
+var _shoppingCartJs = require('./shoppingCart.js');
+var _parcelHelpers = require("@parcel/transformer-js/lib/esmodule-helpers.js");
+var _shoppingCartJsDefault = _parcelHelpers.interopDefault(_shoppingCartJs);
+// Importing module
+// import { addToCart, totalPrice as price, tq } from './shoppingCart.js';
+console.log('Importing module');
+_shoppingCartJsDefault.default('milk', 3);
+_shoppingCartJsDefault.default('bread', 5);
