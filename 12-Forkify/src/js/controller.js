@@ -33,11 +33,16 @@ const rederSpinner = function (parentEl) {
 
 const showRecipe = async function () {
   try {
+    const id = window.location.hash.slice(1);
+
+    if (!id) return;
+    console.log(id);
+
     // 1. Loading recipe
     rederSpinner(recipeContainer);
 
     const res = await fetch(
-      `https://forkify-api.herokuapp.com/api/v2/recipes/5ed6604591c37cdc054bc886`
+      `https://forkify-api.herokuapp.com/api/v2/recipes/${id}`
     );
 
     const data = await res.json();
@@ -121,7 +126,6 @@ const showRecipe = async function () {
           <ul class="recipe__ingredient-list">
           ${recipe.ingredients
             .map(ing => {
-              console.log(ing);
               return `
               <li class="recipe__ingredient">
                 <svg class="recipe__icon">
@@ -138,8 +142,6 @@ const showRecipe = async function () {
             .join('')}
           </ul>
        </div>;
-
-
 
       <div class="recipe__directions">
         <h2 class="heading--2">How to cook it</h2>
@@ -172,3 +174,11 @@ const showRecipe = async function () {
 };
 
 showRecipe();
+
+// We want to load the recipe in these 2 cases:
+// either when 'hashchange' is emitted which means that recipe has changed,
+// or when the app is opened with the recipe id in the url ('load' event)
+
+['hashchange', 'load'].forEach(ev => window.addEventListener(ev, showRecipe));
+// window.addEventListener('hashchange', showRecipe);
+// window.addEventListener('load', showRecipe);
