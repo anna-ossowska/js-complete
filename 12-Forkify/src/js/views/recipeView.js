@@ -1,7 +1,7 @@
 // import icons from '../img/icons.svg'; // Parcel 1
 import icons from 'url:../../img/icons.svg'; // Parcel 2
-import { Fraction } from 'fractional';
-console.log(Fraction);
+import { Fraction } from 'fractional'; // Fraction is a fn
+
 class RecipeView {
   // Make all the Views to have these properties
   #parentElement = document.querySelector('.recipe');
@@ -28,7 +28,7 @@ class RecipeView {
     </div>
   `;
 
-    this.#parentElement.innerHTML = '';
+    this.#clear();
     this.#parentElement.insertAdjacentHTML('afterbegin', html);
   }
 
