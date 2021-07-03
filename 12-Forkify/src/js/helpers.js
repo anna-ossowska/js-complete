@@ -23,7 +23,7 @@ export const getJSON = async function (url) {
     return data;
   } catch (err) {
     // promise returned from this fn is now being rejected if there is an error
-    // propagating error down from one async fn to the other
+    // propagating error down from async fn in helper.js --> to async fn in model.js
     // console.log(`Helper ${err}`);
     throw err;
   }
