@@ -23,12 +23,8 @@ const controlRecipes = async function () {
   }
 };
 
-// We want to load the recipe in these 2 cases:
-// either when 'hashchange' is emitted which means that recipe has changed,
-// or when the app is opened with the recipe id in the url ('load' event)
+const init = function () {
+  recipeView.addHandlerRender(controlRecipes);
+};
 
-['hashchange', 'load'].forEach(ev =>
-  window.addEventListener(ev, controlRecipes)
-);
-// window.addEventListener('hashchange', showRecipe);
-// window.addEventListener('load', showRecipe);
+init();

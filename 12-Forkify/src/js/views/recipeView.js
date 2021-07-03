@@ -32,6 +32,16 @@ class RecipeView {
     this.#parentElement.insertAdjacentHTML('afterbegin', html);
   }
 
+  // Publisher
+  addHandlerRender(subscriber) {
+    // We want to load the recipe in these 2 cases:
+    // either when 'hashchange' is emitted which means that recipe has changed,
+    // or when the app is opened with the recipe id in the url ('load' event)
+    ['hashchange', 'load'].forEach(ev =>
+      window.addEventListener(ev, subscriber)
+    );
+  }
+
   #generateMarkup() {
     return `
       <figure class="recipe__fig">
