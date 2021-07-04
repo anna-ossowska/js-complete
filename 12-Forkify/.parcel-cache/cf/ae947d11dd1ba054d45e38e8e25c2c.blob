@@ -493,9 +493,9 @@ const controlSearchResults = async function () {
 
     await model.loadSearchResults(query); // 4. Render results
 
-    console.log(model.state.search.results); // resultsView.render(model.state.search.results);
+    console.log(model.state.search.results);
 
-    _resultsView.default.render(model.getSearchResultsPage());
+    _resultsView.default.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
@@ -1406,8 +1406,7 @@ const state = {
   search: {
     query: '',
     results: [],
-    page: 1,
-    resultsPerPage: _config.RES_PER_PAGE
+    resultsPerPage: 10
   }
 };
 exports.state = state;
@@ -1463,8 +1462,7 @@ const loadSearchResults = async function (query) {
 
 exports.loadSearchResults = loadSearchResults;
 
-const getSearchResultsPage = function (page = state.search.page) {
-  state.search.page = page;
+const getSearchResultsPage = function (page) {
   const start = (page - 1) * state.search.resultsPerPage; // 0;
 
   const end = page * state.search.resultsPerPage; // 9;

@@ -493,9 +493,9 @@ const controlSearchResults = async function () {
 
     await model.loadSearchResults(query); // 4. Render results
 
-    console.log(model.state.search.results); // resultsView.render(model.state.search.results);
+    console.log(model.state.search.results);
 
-    _resultsView.default.render(model.getSearchResultsPage());
+    _resultsView.default.render(model.state.search.results);
   } catch (err) {
     console.log(err);
   }
@@ -1405,9 +1405,7 @@ const state = {
   recipe: {},
   search: {
     query: '',
-    results: [],
-    page: 1,
-    resultsPerPage: _config.RES_PER_PAGE
+    results: []
   }
 };
 exports.state = state;
@@ -1463,11 +1461,10 @@ const loadSearchResults = async function (query) {
 
 exports.loadSearchResults = loadSearchResults;
 
-const getSearchResultsPage = function (page = state.search.page) {
-  state.search.page = page;
-  const start = (page - 1) * state.search.resultsPerPage; // 0;
+const getSearchResultsPage = function (page) {
+  const start = (page - 1) * 10; // 0;
 
-  const end = page * state.search.resultsPerPage; // 9;
+  const end = page * 10; // 9;
 
   return state.search.results.slice(start, end);
 };
@@ -2267,13 +2264,11 @@ exports.getJSON = getJSON;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.RES_PER_PAGE = exports.TIMEOUT_SEC = exports.API_URL = void 0;
+exports.TIMEOUT_SEC = exports.API_URL = void 0;
 const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes';
 exports.API_URL = API_URL;
 const TIMEOUT_SEC = 10;
 exports.TIMEOUT_SEC = TIMEOUT_SEC;
-const RES_PER_PAGE = 10;
-exports.RES_PER_PAGE = RES_PER_PAGE;
 },{}],"bcae1aced0301b01ccacb3e6f7dfede8":[function(require,module,exports) {
 "use strict";
 

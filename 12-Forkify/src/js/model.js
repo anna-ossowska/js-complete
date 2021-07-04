@@ -3,6 +3,8 @@ export const state = {
   search: {
     query: '',
     results: [],
+    page: 1,
+    resultsPerPage: RES_PER_PAGE,
   },
 };
 
@@ -10,6 +12,7 @@ import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
 import { API_URL } from './config.js';
+import { RES_PER_PAGE } from './config.js';
 import { getJSON } from './helpers.js';
 
 // this function does not return anything, it just changes the state object
@@ -61,4 +64,11 @@ export const loadSearchResults = async function (query) {
     console.error(`Model ${err}`);
     throw err;
   }
+};
+
+export const getSearchResultsPage = function (page = state.search.page) {
+  state.search.page = page;
+  const start = (page - 1) * state.search.resultsPerPage; // 0;
+  const end = page * state.search.resultsPerPage; // 9;
+  return state.search.results.slice(start, end);
 };

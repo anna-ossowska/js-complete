@@ -1,17 +1,17 @@
 16999
 92/home/anna/code/anna-ossowska/js-complete/12-Forkify/forkify-architecture-recipe-loading.png1611751378000000000 0
-84/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/controller.19d1955b.js.map1625412022492749200 0
-76/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/icons.b132d5ea.svg1625412022482749200 0
-80/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/controller.19d1955b.js1625412022492749200 0
-57/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist1625412022492749200 1
+84/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/controller.19d1955b.js.map1625415576012749200 0
+76/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/icons.b132d5ea.svg1625415575962749200 0
+80/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/controller.19d1955b.js1625415576012749200 0
+57/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist1625415576012749200 1
 65/home/anna/code/anna-ossowska/js-complete/12-Forkify/package.json1625230633823310300 0
 81/home/anna/code/anna-ossowska/js-complete/12-Forkify/forkify-flowchart-part-1.png1611751378000000000 0
 69/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/img/logo.png1611751378000000000 0
 72/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/img/favicon.png1611751378000000000 0
 60/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/img1625129634608978900 1
 70/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/helpers.js1625331353222070900 0
-69/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/config.js1625320237922298000 0
-73/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/controller.js1625411626402749200 0
+69/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/config.js1625414914662749200 0
+73/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/controller.js1625415575732749200 0
 79/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/views/searchView.js1625411172062749200 0
 80/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/views/resultsView.js1625412022362749200 0
 73/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/views/View.js1625411971302749200 0
@@ -46,7 +46,7 @@
 102/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/modules/es.regexp.dot-all.js499162500000000000 0
 98/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/modules/esnext.set.of.js499162500000000000 0
 104/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/modules/es.regexp.to-string.js499162500000000000 0
-79/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/main.dfe5f565.css.map1625412022492749200 0
+79/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/main.dfe5f565.css.map1625415575972749200 0
 102/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/modules/es.array.flat-map.js499162500000000000 0
 102/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/modules/esnext.math.umulh.js499162500000000000 0
 108/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/modules/es.object.define-getter.js499162500000000000 0
@@ -581,7 +581,7 @@
 109/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/internals/new-promise-capability.js499162500000000000 0
 93/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/internals/shared.js499162500000000000 0
 95/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/internals/redefine.js499162500000000000 0
-75/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/main.dfe5f565.css1625412022482749200 0
+75/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/main.dfe5f565.css1625415575962749200 0
 121/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/internals/fix-regexp-well-known-symbol-logic.js499162500000000000 0
 102/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/internals/create-property.js499162500000000000 0
 110/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/internals/document-create-element.js499162500000000000 0
@@ -2171,7 +2171,7 @@
 86/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ajv/lib/dotjs/ref.js499162500000000000 0
 88/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ajv/lib/dotjs/index.js499162500000000000 0
 99/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ajv/lib/dotjs/_limitProperties.js499162500000000000 0
-78/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/favicon.c6edcba0.png1625412022482749200 0
+78/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/favicon.c6edcba0.png1625415575962749200 0
 89/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ajv/lib/dotjs/README.md499162500000000000 0
 91/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/core-js/es/math/fround.js499162500000000000 0
 93/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ajv/lib/dotjs/properties.js499162500000000000 0
@@ -9642,7 +9642,7 @@
 106/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@babel/types/scripts/utils/lowerFirst.js456789000000000000 0
 125/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@babel/generator/node_modules/source-map/dist/source-map.js1503322374000000000 0
 90/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@parcel/transformer-yaml1625133495778978900 1
-75/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/logo.1ca596f2.png1625412022482749200 0
+75/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/logo.1ca596f2.png1625415575962749200 0
 99/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/es-abstract/2018/ToPropertyKey.js499162500000000000 0
 108/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/unicode-match-property-ecmascript/index.js1528376219000000000 0
 113/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/regenerate-unicode-properties/Script/Sharada.js499162500000000000 0
@@ -10258,7 +10258,7 @@
 87/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@parcel/packager-html1625133493898978900 1
 90/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/lodash.uniq/package.json1625133495068978900 0
 92/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/object-keys/isArguments.js499162500000000000 0
-68/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/model.js1625410697662749200 0
+68/home/anna/code/anna-ossowska/js-complete/12-Forkify/src/js/model.js1625415559632749200 0
 93/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/is-core-module/CHANGELOG.md499162500000000000 0
 84/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/lodash/template.js499162500000000000 0
 109/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/css-tree/lib/definition-syntax/tokenizer.js499162500000000000 0
@@ -12472,7 +12472,7 @@
 113/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@parcel/core/lib/requests/AssetRequestRunner.js499162500000000000 0
 86/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ansi-regex/readme.md499162500000000000 0
 114/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@parcel/core/lib/requests/TargetRequestRunner.js499162500000000000 0
-68/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/index.html1625412022482749200 0
+68/home/anna/code/anna-ossowska/js-complete/12-Forkify/dist/index.html1625415575962749200 0
 89/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@parcel/core/lib/public1625133488378978900 1
 77/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/ejs/LICENSE1574190985000000000 0
 102/home/anna/code/anna-ossowska/js-complete/12-Forkify/node_modules/@parcel/reporter-bundle-analyzer/src1625133487458978900 1
