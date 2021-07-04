@@ -1,5 +1,9 @@
 export const state = {
   recipe: {},
+  search: {
+    query: '',
+    results: [],
+  },
 };
 
 import 'regenerator-runtime/runtime';
@@ -33,6 +37,26 @@ export const loadRecipe = async function (id) {
   } catch (err) {
     console.error(`Model ${err}`);
     // propagating error down from async fn in model.js --> to async fn in controller.js
+    throw err;
+  }
+};
+
+export const loadSearchResults = async function (query) {
+  try {
+    state.search.query = query;
+
+    const data = await getJSON(`${API_URL}?search=${query}`);
+
+    state.search.results = data.data.recipes.map(rec => {
+      return {
+        id: rec.id,
+        title: rec.title,
+        publisher: rec.publisher,
+        image: rec.image_url,
+      };
+    });
+  } catch (err) {
+    console.error(`Model ${err}`);
     throw err;
   }
 };
