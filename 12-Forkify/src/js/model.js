@@ -34,6 +34,8 @@ export const loadRecipe = async function (id) {
       cookingTime: recipe.cooking_time,
       ingredients: recipe.ingredients,
     };
+
+    console.log(data);
   } catch (err) {
     console.error(`Model ${err}`);
     // propagating error down from async fn in model.js --> to async fn in controller.js
