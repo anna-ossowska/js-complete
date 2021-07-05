@@ -39,6 +39,7 @@ export const loadRecipe = async function (id) {
     };
 
     console.log(data);
+    console.log(state.recipe);
   } catch (err) {
     console.error(`Model ${err}`);
     // propagating error down from async fn in model.js --> to async fn in controller.js
@@ -71,4 +72,14 @@ export const getSearchResultsPage = function (page = state.search.page) {
   const start = (page - 1) * state.search.resultsPerPage; // 0;
   const end = page * state.search.resultsPerPage; // 9;
   return state.search.results.slice(start, end);
+};
+
+export const updateServings = function (newServings) {
+  console.log(state.recipe.ingredients);
+  state.recipe.ingredients.forEach(ing => {
+    // newQnt = 2 * 5 / 4 = 2.5
+    // newQnt = oldQnt * newServings / oldServings
+    ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
+  });
+  state.recipe.servings = newServings;
 };
