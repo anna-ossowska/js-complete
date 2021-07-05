@@ -1,0 +1,108 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _icons = _interopRequireDefault(require("url:../../img/icons.svg"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// Parcel 2
+class View {
+  constructor() {
+    _defineProperty(this, "_data", void 0);
+  }
+
+  render(data) {
+    if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+    this._data = data;
+
+    const markup = this._generateMarkup();
+
+    this._clear();
+
+    this._parentEl.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  update(data) {
+    // generating a new markup and comparing an old html to new html and only changing text and attributes that actually have changed
+    if (!data || Array.isArray(data) && data.length === 0) return this.renderError();
+    this._data = data;
+
+    const newMarkup = this._generateMarkup(); // Converting newMarkup into DOM object that we can then use to compare
+    // with actual DOM that is on the page
+
+
+    const newDOM = document.createRange().createContextualFragment(newMarkup); // Selecting all elements
+
+    const newElements = Array.from(newDOM.querySelectorAll('*')); // Current elements rendered in the DOM
+
+    const currElements = Array.from(this._parentEl.querySelectorAll('*'));
+    newElements.forEach((newEl, i) => {
+      const currEl = currElements[i];
+
+      if (!newEl.isEqualNode(currEl)) {
+        console.log(currEl);
+      }
+    });
+  }
+
+  _clear() {
+    this._parentEl.innerHTML = '';
+  }
+
+  renderSpinner() {
+    const html = `
+    <div class="spinner">
+      <svg>
+        <use href="${_icons.default}#icon-loader"></use>
+      </svg>
+    </div>
+  `;
+
+    this._clear();
+
+    this._parentEl.insertAdjacentHTML('afterbegin', html);
+  }
+
+  renderError(msg = this._errorMsg) {
+    const html = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${_icons.default}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${msg}</p>
+      </div>
+    `;
+
+    this._clear();
+
+    this._parentEl.insertAdjacentHTML('afterbegin', html);
+  }
+
+  renderMsg(msg = this._msg) {
+    const html = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${_icons.default}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${msg}</p>
+      </div>
+    `;
+
+    this._clear();
+
+    this._parentEl.insertAdjacentHTML('afterbegin', html);
+  }
+
+}
+
+exports.default = View;
