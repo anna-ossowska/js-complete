@@ -3356,7 +3356,7 @@ class BookmarksView extends _View.default {
   }
 
   _generateMarkup() {
-    return this._data.map(bookmark => _previewView.default.render(bookmark, false)).join('');
+    return this._data.map(bookmark => _previewView.default.render(bookmark, false));
   }
 
 }
