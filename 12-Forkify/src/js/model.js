@@ -6,6 +6,7 @@ export const state = {
     page: 1,
     resultsPerPage: RES_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 import 'regenerator-runtime/runtime';
@@ -38,6 +39,13 @@ export const loadRecipe = async function (id) {
       ingredients: recipe.ingredients,
     };
 
+    // Adding bookmarks to the loaded recipes
+    // If we added a bookmark in the past, and decide to come back to it later,
+    // bookmarked property will be set to true
+    if (state.bookmarks.some(bookmark => bookmark.id === id))
+      state.recipe.bookmarked = true;
+    else state.recipe.bookmarked = false;
+
     console.log(data);
     console.log(state.recipe);
   } catch (err) {
@@ -61,6 +69,8 @@ export const loadSearchResults = async function (query) {
         image: rec.image_url,
       };
     });
+
+    state.search.page = 1;
   } catch (err) {
     console.error(`Model ${err}`);
     throw err;
@@ -75,11 +85,28 @@ export const getSearchResultsPage = function (page = state.search.page) {
 };
 
 export const updateServings = function (newServings) {
-  console.log(state.recipe.ingredients);
   state.recipe.ingredients.forEach(ing => {
     // newQnt = 2 * 5 / 4 = 2.5
     // newQnt = oldQnt * newServings / oldServings
     ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
   });
   state.recipe.servings = newServings;
+};
+
+export const addBookmark = function (recipe) {
+  // Add bookmark
+  state.bookmarks.push(recipe);
+
+  // Mark current recipe as bookmarked
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+};
+
+export const deleteBookmark = function (id) {
+  // delete bookmark
+  const index = state.bookmarks.findIndex(bookmark => bookmark.id === id);
+
+  state.bookmarks.splice(index, 1);
+
+  // Mark current recipe as NOT bookmarked
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
 };
