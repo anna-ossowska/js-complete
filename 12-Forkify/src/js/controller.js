@@ -3,6 +3,7 @@ import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import paginationView from './views/paginationView.js';
+import bookmarksView from './views/bookmarksView.js';
 
 import 'core-js/stable'; // for pollyfilling everything else
 import 'regenerator-runtime/runtime'; // for pollyfilling aync await only
@@ -22,6 +23,7 @@ const controlRecipes = async function () {
 
     // 0. Updating resultsView to mark selected search results
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     // 1. Loading recipe
     // loadRecipe is an async fn, thus, it returns a promise which should be awaited
@@ -83,13 +85,16 @@ const controlServings = function (newServings) {
 };
 
 const controlAddBookmark = function () {
+  // 1. Add/remove bookmark
   if (model.state.recipe.bookmarked)
     model.deleteBookmark(model.state.recipe.id);
   else model.addBookmark(model.state.recipe);
 
-  console.log(model.state.recipe.bookmarked);
-
+  // 2. Update recipe view
   recipeView.update(model.state.recipe);
+
+  // 3. Render bookmarks list
+  bookmarksView.render(model.state.bookmarks);
 };
 
 const init = function () {

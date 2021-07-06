@@ -472,9 +472,7 @@ const controlRecipes = async function () {
     _recipeView.default.renderSpinner(); // 0. Updating resultsView to mark selected search results
 
 
-    _resultsView.default.update(model.getSearchResultsPage());
-
-    _bookmarksView.default.update(model.state.bookmarks); // 1. Loading recipe
+    _resultsView.default.update(model.getSearchResultsPage()); // 1. Loading recipe
     // loadRecipe is an async fn, thus, it returns a promise which should be awaited
     // one async fn calls another async fn
 
