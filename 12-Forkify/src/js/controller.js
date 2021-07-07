@@ -21,19 +21,19 @@ const controlRecipes = async function () {
     if (!id) return;
     recipeView.renderSpinner();
 
-    // 0. Updating resultsView to mark selected search results
+    // 1. Updating resultsView to mark selected search results
     resultsView.update(model.getSearchResultsPage());
     bookmarksView.update(model.state.bookmarks);
 
-    // 1. Loading recipe
+    // 2. Loading recipe
     // loadRecipe is an async fn, thus, it returns a promise which should be awaited
     // one async fn calls another async fn
     await model.loadRecipe(id);
 
-    // 2. Rendering recipe
+    // 3. Rendering recipe
     recipeView.render(model.state.recipe);
   } catch (err) {
-    console.log(err);
+    console.error(err);
     recipeView.renderError();
   }
 };
@@ -97,7 +97,12 @@ const controlAddBookmark = function () {
   bookmarksView.render(model.state.bookmarks);
 };
 
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
 const init = function () {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
