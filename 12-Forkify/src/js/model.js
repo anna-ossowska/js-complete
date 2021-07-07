@@ -2,7 +2,8 @@ import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
 import { API_URL, RES_PER_PAGE, KEY } from './config.js';
-import { getJSON, sendJSON } from './helpers.js';
+// import { getJSON, sendJSON } from './helpers.js';
+import { AJAX } from './helpers.js';
 
 export const state = {
   recipe: {},
@@ -35,10 +36,10 @@ const createRecipeObject = function (data) {
 // this function does not return anything, it just changes the state object
 // by creating the recipe inside of it
 // thus, we say it has the 'side effect'
-// This async fn calls another async fn --> getJSON()
+// This async fn calls another async fn --> AJAX()
 export const loadRecipe = async function (id) {
   try {
-    const data = await getJSON(`${API_URL}/${id}`);
+    const data = await AJAX(`${API_URL}/${id}?key=${KEY}`);
 
     state.recipe = createRecipeObject(data);
 
@@ -48,9 +49,6 @@ export const loadRecipe = async function (id) {
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
-
-    console.log(data);
-    console.log(state.recipe);
   } catch (err) {
     console.error(`Model ${err}`);
     // propagating error down from async fn in model.js --> to async fn in controller.js
@@ -62,7 +60,7 @@ export const loadSearchResults = async function (query) {
   try {
     state.search.query = query;
 
-    const data = await getJSON(`${API_URL}?search=${query}`);
+    const data = await AJAX(`${API_URL}?search=${query}&key=${KEY}`);
 
     state.search.results = data.data.recipes.map(rec => {
       return {
@@ -70,6 +68,7 @@ export const loadSearchResults = async function (query) {
         title: rec.title,
         publisher: rec.publisher,
         image: rec.image_url,
+        ...(rec.key && { key: rec.key }),
       };
     });
 
@@ -158,7 +157,7 @@ export const uploadRecipe = async function (newRecipe) {
       ingredients,
     };
 
-    const data = await sendJSON(`${API_URL}?key=${KEY}`, recipe);
+    const data = await AJAX(`${API_URL}?key=${KEY}`, recipe);
     state.recipe = createRecipeObject(data);
     addBookmark(state.recipe);
   } catch (err) {

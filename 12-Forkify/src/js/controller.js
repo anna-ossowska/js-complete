@@ -120,6 +120,12 @@ const controlAddRecipe = async function (newRecipe) {
 
     // Success message
     addRecipeView.renderMsg();
+
+    // Render bookmark view
+    bookmarksView.render(model.state.bookmarks);
+
+    // Change id in the url without reloading the page
+    window.history.pushState(null, '', `#${model.state.recipe.id}`);
   } catch (err) {
     console.error('💥', err);
     addRecipeView.renderError(err.message);
